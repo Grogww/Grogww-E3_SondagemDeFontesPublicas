@@ -1,0 +1,7 @@
+{
+  // Configuração das sondas. Cada fonte é acrescentada pelo /gerar-sonda <fonte>.
+  // Chaves de acesso: só por variável de ambiente (campo "variavelChave"), nunca neste arquivo.
+  "userAgent": "SondaPVJ3281/0.1 (pesquisa academica PVJ3281-2026, IFC)",
+  "pastaDados": "dados",
+  "fontes": {}
+}
