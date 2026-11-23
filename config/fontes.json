@@ -3,5 +3,356 @@
   // Chaves de acesso: só por variável de ambiente (campo "variavelChave"), nunca neste arquivo.
   "userAgent": "SondaPVJ3281/0.1 (pesquisa academica PVJ3281-2026, IFC)",
   "pastaDados": "dados",
-  "fontes": {}
+  "fontes": {
+    "pncp": {
+      // API de Consultas (ficha 2; manual §3.1, p. 3). Caminhos relativos saem daqui.
+      "baseUrl": "https://pncp.gov.br/api/consulta",
+      "timeoutSegundos": 90,
+      "maxTentativas": 3,
+      "limitePorMinuto": null,
+      "origemLimite": "Não informado (fichas 1 e 2, Condições de uso: limite de requisições não informado)",
+      "parametros": {
+        // API de Integração (ficha 1; manual de Integração §5.3). Só GET públicos por chave.
+        "baseUrlIntegracao": "https://pncp.gov.br/api/pncp",
+        "uf": "SC",
+        "swagger": [
+          // URL do api-docs de Consultas deduzida do endereço do swagger-ui (manual §3.1); a de Integração, do configUrl (§5.3).
+          { "chave": "snapshot-consulta", "url": "https://pncp.gov.br/api/consulta/v3/api-docs", "arquivo": "swagger-consulta.json" },
+          { "chave": "snapshot-integracao", "url": "https://pncp.gov.br/pncp-api/v3/api-docs", "arquivo": "swagger-integracao.json" }
+        ],
+        "dominios": [
+          { "endpoint": "dominio-modalidades", "caminho": "v1/modalidades" },
+          { "endpoint": "dominio-modos-disputas", "caminho": "v1/modos-disputas" },
+          { "endpoint": "dominio-portes-empresa", "caminho": "v1/portes-empresa" },
+          { "endpoint": "dominio-naturezas-juridicas", "caminho": "v1/naturezas-juridicas" },
+          { "endpoint": "dominio-situacoes-resultado", "caminho": "v1/situacoes-compra-item-resultado" },
+          { "endpoint": "dominio-tipos-contratos", "caminho": "v1/tipos-contratos" }
+        ],
+        // tamanhoPagina: menor máximo entre manual (500) e Swagger (50 nas contratações, 100 em
+        // instrumentos de cobrança, 500 nas demais). Datas em AAAAMMDD.
+        "consultas": [
+          {
+            // Filtro de SC na origem (uf). As 13 modalidades do domínio (manual §5.2).
+            "endpoint": "contratacoes-publicacao",
+            "caminho": "v1/contratacoes/publicacao",
+            "filtros": { "dataInicial": "20260801", "dataFinal": "20260831", "uf": "SC" },
+            "modalidades": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ],
+            "tamanhoPagina": 50,
+            "maxPaginas": 10,
+            "detalhar": "compras"
+          },
+          {
+            "endpoint": "contratacoes-atualizacao",
+            "caminho": "v1/contratacoes/atualizacao",
+            "filtros": { "dataInicial": "20261101", "dataFinal": "20261107", "uf": "SC" },
+            "modalidades": [ 6, 8 ],
+            "tamanhoPagina": 50,
+            "maxPaginas": 3
+          },
+          {
+            // Modalidade opcional no Swagger (o manual, §6.4, diverge entre texto e tabela).
+            "endpoint": "contratacoes-proposta",
+            "caminho": "v1/contratacoes/proposta",
+            "filtros": { "dataFinal": "20261130", "uf": "SC" },
+            "tamanhoPagina": 50,
+            "maxPaginas": 5
+          },
+          {
+            // Sem filtro de UF: varredura nacional de um dia; SC separada no retorno.
+            "endpoint": "contratos",
+            "caminho": "v1/contratos",
+            "filtros": { "dataInicial": "20261006", "dataFinal": "20261006" },
+            "tamanhoPagina": 500,
+            "maxPaginas": 5,
+            "detalhar": "contratos"
+          },
+          {
+            "endpoint": "contratos-atualizacao",
+            "caminho": "v1/contratos/atualizacao",
+            "filtros": { "dataInicial": "20261106", "dataFinal": "20261106" },
+            "tamanhoPagina": 500,
+            "maxPaginas": 2
+          },
+          {
+            // Sem filtro de UF e sem UF no retorno (SC só pelo CNPJ do órgão).
+            "endpoint": "atas",
+            "caminho": "v1/atas",
+            "filtros": { "dataInicial": "20261006", "dataFinal": "20261006" },
+            "tamanhoPagina": 500,
+            "maxPaginas": 3
+          },
+          {
+            "endpoint": "atas-atualizacao",
+            "caminho": "v1/atas/atualizacao",
+            "filtros": { "dataInicial": "20261106", "dataFinal": "20261106" },
+            "tamanhoPagina": 500,
+            "maxPaginas": 2
+          },
+          {
+            "endpoint": "instrumentos-cobranca",
+            "caminho": "v1/instrumentoscobranca/inclusao",
+            "filtros": { "dataInicial": "20261001", "dataFinal": "20261007" },
+            "tamanhoPagina": 100,
+            "maxPaginas": 3
+          },
+          {
+            "endpoint": "pca-atualizacao",
+            "caminho": "v1/pca/atualizacao",
+            "filtros": { "dataInicio": "20261001", "dataFim": "20261007" },
+            "tamanhoPagina": 500,
+            "maxPaginas": 2
+          }
+        ],
+        // Consultas por chave, a partir das contratações e dos contratos de SC lidos acima.
+        "detalhes": {
+          "comprasPorModalidade": 10,
+          "itensTamanhoPagina": 50,
+          "itensComResultadoPorCompra": 3,
+          "contratos": 20,
+          "orgaos": 10
+        }
+      }
+    },
+    "portal-transparencia": {
+      // API de Dados (fichas 3, 4 e 5, URL oficial; Swagger, servers). CEIS, CNEP e CEPIM.
+      "baseUrl": "https://api.portaldatransparencia.gov.br",
+      "timeoutSegundos": 60,
+      "maxTentativas": 3,
+      // Menor dos dois limites declarados: 400/min das 6:00 às 23:59; 700/min das 00:00 às 5:59.
+      "limitePorMinuto": 400,
+      "origemLimite": "Fichas 3, 4 e 5, Condições de uso (página API de Dados, \"Consultas disponíveis\"): 400 requisições por minuto das 6:00 às 23:59 e 700 das 00:00 às 5:59; adotado o menor",
+      // Swagger, securitySchemes. O valor da chave vem só da variável de ambiente.
+      "headerChave": "chave-api-dados",
+      "variavelChave": "PORTAL_TRANSPARENCIA_CHAVE",
+      "parametros": {
+        "uf": "SC",
+        // Endereço do api-docs não consta da documentação salva (só o da página do Swagger,
+        // https://api.portaldatransparencia.gov.br/): caminho deduzido. Vazio = não baixar.
+        "swagger": { "url": "https://api.portaldatransparencia.gov.br/v3/api-docs", "arquivo": "swagger.json" },
+        // Tamanho da página não informado: cada série vai até a primeira página vazia ou maxPaginas.
+        // Datas em DD/MM/AAAA (Swagger, descrição dos parâmetros).
+        "cadastros": [
+          {
+            // Sem filtro de UF: varredura nacional; SC separada no retorno (UF do órgão sancionador).
+            "endpoint": "ceis",
+            "caminho": "api-de-dados/ceis",
+            "campoUf": "orgaoSancionador.siglaUf",
+            "campoCnpj": "pessoa.cnpjFormatado",
+            "parametroCnpj": "codigoSancionado",
+            "series": [
+              { "filtros": {}, "maxPaginas": 20 },
+              { "filtros": { "dataInicialSancao": "01/01/2026", "dataFinalSancao": "31/10/2026" }, "maxPaginas": 40 }
+            ],
+            "detalharIds": 10
+          },
+          {
+            "endpoint": "cnep",
+            "caminho": "api-de-dados/cnep",
+            "campoUf": "orgaoSancionador.siglaUf",
+            "campoCnpj": "pessoa.cnpjFormatado",
+            "parametroCnpj": "codigoSancionado",
+            "series": [
+              { "filtros": {}, "maxPaginas": 20 },
+              { "filtros": { "dataInicialSancao": "01/01/2026", "dataFinalSancao": "31/10/2026" }, "maxPaginas": 40 }
+            ],
+            "detalharIds": 10
+          },
+          {
+            // Filtro de SC na origem (ufSancionado); o retorno não traz UF. Sem filtro de período.
+            // A série sem filtro serve só de comparação (amostra nacional curta).
+            "endpoint": "cepim",
+            "caminho": "api-de-dados/cepim",
+            "campoCnpj": "pessoaJuridica.cnpjFormatado",
+            "parametroCnpj": "cnpjSancionado",
+            "series": [
+              { "filtros": { "ufSancionado": "SC" }, "maxPaginas": 20 },
+              { "filtros": {}, "maxPaginas": 3 }
+            ],
+            "detalharIds": 10
+          }
+        ],
+        // CNPJs de SC colhidos em cada cadastro e consultados nos três (endpoints "<cadastro>-cnpj").
+        "cruzamento": { "cnpjsPorCadastro": 10 }
+      }
+    },
+    "cndt": {
+      // Consulta web sem API (ficha 7, Modalidade de acesso). Página de emissão e validação.
+      "baseUrl": "https://cndt-certidao.tst.jus.br",
+      "timeoutSegundos": 60,
+      "maxTentativas": 3,
+      "limitePorMinuto": null,
+      "origemLimite": "Não informado (ficha 7, Condições de uso: cadastro, chave, captcha e limite de requisições não informados)",
+      "parametros": {
+        // Só as páginas citadas na ficha 7 (URL oficial). O formulário de emissão não tem
+        // endereço documentado e não é acionado.
+        "paginas": [
+          { "endpoint": "pagina-emissao", "chave": "pagina", "url": "" },
+          { "endpoint": "pagina-apresentacao", "chave": "pagina", "url": "https://www.tst.jus.br/o-que-e-cndt" }
+        ]
+      }
+    },
+    "cnpj": {
+      // Download em lote, sem API (ficha 6, Modalidade de acesso). Repositório de arquivos da
+      // Receita Federal: endereço tirado dos links das listagens salvas (repositorioDeArquivos.pdf).
+      "baseUrl": "https://arquivos.receitafederal.gov.br",
+      // Arquivos de até centenas de MB por requisição.
+      "timeoutSegundos": 900,
+      "maxTentativas": 3,
+      "limitePorMinuto": null,
+      "origemLimite": "Não informado (ficha 6, Condições de uso: limite de requisições ou de downloads não informado)",
+      "parametros": {
+        // Páginas de listagem documentadas (links dos PDFs de listagem; NT RFB/Cocad 47/2024, item 2).
+        "listagens": [
+          { "endpoint": "pagina-conjunto", "chave": "dados.gov.br", "url": "https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" },
+          { "endpoint": "listagem-raiz", "chave": "raiz", "url": "index.php/s/gn672Ad4CF8N6TK" },
+          { "endpoint": "listagem-cnpj", "chave": "meses", "url": "index.php/s/YggdBLfdninEJX9" },
+          { "endpoint": "listagem-cnpj", "chave": "mes=2026-10", "url": "index.php/s/YggdBLfdninEJX9?dir=/2026-10" },
+          { "endpoint": "listagem-ecf", "chave": "raiz", "url": "index.php/s/MPPfFit7g7zdA8C" }
+        ],
+        // Endereço de download de arquivo: não consta dos documentos salvos (ficha 6, Observações).
+        // Vazio = a amostra abaixo não é baixada. Marcadores: {compartilhamento}, {dir}, {nome}.
+        "modeloDownload": "",
+        // Amostra fixa: só arquivos que aparecem nas listagens salvas (DicionarioCNPJ2026-10.pdf,
+        // regimestributarios.pdf). Simples, Sócios e demais domínios não aparecem nelas.
+        "arquivos": [
+          { "endpoint": "dominio-cnaes", "compartilhamento": "index.php/s/YggdBLfdninEJX9", "dir": "/2026-10", "nome": "Cnaes.zip" },
+          { "endpoint": "empresas", "compartilhamento": "index.php/s/YggdBLfdninEJX9", "dir": "/2026-10", "nome": "Empresas1.zip" },
+          { "endpoint": "estabelecimentos", "compartilhamento": "index.php/s/YggdBLfdninEJX9", "dir": "/2026-10", "nome": "Estabelecimentos1.zip" },
+          { "endpoint": "ecf-lucro-arbitrado", "compartilhamento": "index.php/s/MPPfFit7g7zdA8C", "dir": "/", "nome": "entidades-lucro-arbitrado.zip" }
+        ]
+      }
+    },
+    "transparencia-sc": {
+      // Consulta web e CSV, sem API declarada (ficha 8, Modalidade de acesso e Limitações declaradas).
+      "baseUrl": "https://www.transparencia.sc.gov.br",
+      "timeoutSegundos": 60,
+      "maxTentativas": 3,
+      "limitePorMinuto": null,
+      "origemLimite": "Não informado (ficha 8, Condições de uso: limite de requisições não informado)",
+      "parametros": {
+        // Só endereços que constam dos links do PDF da página inicial (p. 1 e p. 3) e de
+        // texto_dados-abertos-despesa.txt. Receita Detalhada e Despesa Detalhada não têm
+        // endereço documentado.
+        "paginas": [
+          { "endpoint": "pagina-inicial", "chave": "pagina", "url": "" },
+          // Despesa anual por área, exercício 2026 (PDF, p. 1).
+          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2317;area=educacao", "url": "despesa/2026/indicador/2317" },
+          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2304;area=saude", "url": "despesa/2026/indicador/2304" },
+          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2322;area=seguranca", "url": "despesa/2026/indicador/2322" },
+          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2337;area=agricultura", "url": "despesa/2026/indicador/2337" },
+          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2327;area=transporte", "url": "despesa/2026/indicador/2327" },
+          // Destino do botão "Acesse" de Dados Abertos (PDF, p. 3); outro domínio.
+          { "endpoint": "dados-abertos", "chave": "pagina", "url": "https://dados.sc.gov.br/" },
+          // Menu Despesa > Dados Abertos > Despesa: lista os arquivos mensais e o dicionário.
+          { "endpoint": "dados-abertos-despesa", "chave": "pagina", "url": "dados-abertos/32/subareainteresse/35" },
+          // Conjunto no portal de dados abertos do Estado; aponta de volta para o portal.
+          { "endpoint": "dados-abertos", "chave": "dataset=despesa-do-poder-executivo", "url": "https://dados.sc.gov.br/dataset/despesa-do-poder-executivo" }
+        ],
+        // Dicionário de dados da despesa (link da página "Dados Abertos de Despesa"). Vazio = não baixar.
+        "dicionario": {
+          "endpoint": "dicionario-despesa",
+          "chave": "arquivo",
+          "url": "https://arquivos.transparencia.sc.gov.br/transparenciasc/dados-abertos/despesa/dicionario-de-dados/Dicion%C3%A1rio%20de%20Dados%20-Dados%20Abertos%20-%20Despesa%20do%20Poder%20Executivo.pdf",
+          "arquivo": "arquivos/despesa/dicionario-de-dados-despesa.pdf"
+        },
+        // Arquivos mensais de despesa (ZIP com um CSV), de 2011-01 a 2026-10 na listagem de
+        // 2026-11-15. Amostra fixa: os meses dados como exemplo na página e o primeiro da série.
+        // Cada ZIP tem cerca de 7 MB (2026-10).
+        "despesa": {
+          "endpoint": "despesa-mensal",
+          "modeloUrl": "https://arquivos.transparencia.sc.gov.br/transparenciasc/dados-abertos/despesa/{ano}/despesa_{ano}_{mes}.zip",
+          "meses": [ "2026-10", "2026-01", "2025-12", "2023-11", "2011-01" ]
+        }
+      }
+    },
+    "sicaf": {
+      // API de dados abertos do Compras.gov.br (ficha 9, URL oficial; Swagger, servers).
+      "baseUrl": "https://dadosabertos.compras.gov.br",
+      "timeoutSegundos": 120,
+      "maxTentativas": 3,
+      "limitePorMinuto": null,
+      "origemLimite": "Não informado (ficha 9, Condições de uso: limite de requisições não informado)",
+      "parametros": {
+        "uf": "SC",
+        // Endereço do api-docs não consta da documentação salva (só o do swagger-ui, Portal de
+        // Dados Abertos, p. 2): caminho deduzido. Vazio = não baixar.
+        "swagger": { "url": "https://dadosabertos.compras.gov.br/v3/api-docs", "arquivo": "swagger.json" },
+        // Cadastro de fornecedores. Sem filtro de UF: varredura nacional; SC separada no retorno
+        // (ufSigla). tamanhoPagina no máximo do Swagger (500); ativo é obrigatório.
+        "fornecedores": {
+          "endpoint": "fornecedores",
+          "caminho": "modulo-fornecedor/1_consultarFornecedor",
+          "tamanhoPagina": 500,
+          "series": [
+            { "filtros": { "ativo": "true" }, "maxPaginas": 40 },
+            { "filtros": { "ativo": "false" }, "maxPaginas": 5 }
+          ],
+          // Filtros testados com os valores mais frequentes do retorno (domínios não documentados).
+          "filtrosDerivados": { "codigoCnae": 3, "porteEmpresaId": 2, "naturezaJuridicaId": 2 },
+          "maxPaginasFiltro": 2,
+          // Fornecedores de SC consultados por CNPJ e nas consultas de "porFornecedor".
+          "consultarCnpjs": 20
+        },
+        // Contratações vinculadas ao fornecedor (ficha 9), pelo filtro niFornecedor. Datas em AAAA-MM-DD.
+        // tamanhoPagina 100: resposta da área técnica recomenda de 50 a 100 (Portal de Dados Abertos, p. 11).
+        "porFornecedor": [
+          {
+            "endpoint": "arp-itens-fornecedor",
+            "caminho": "modulo-arp/2_consultarARPItem",
+            "filtros": { "dataVigenciaInicialMin": "2025-11-01", "dataVigenciaInicialMax": "2026-10-31" },
+            "tamanhoPagina": 100,
+            "maxPaginas": 2
+          },
+          {
+            "endpoint": "resultados-fornecedor",
+            "caminho": "modulo-contratacoes/3_consultarResultadoItensContratacoes_PNCP_14133",
+            "filtros": { "dataResultadoPncpInicial": "2026-01-01", "dataResultadoPncpFinal": "2026-10-31" },
+            "tamanhoPagina": 100,
+            "maxPaginas": 2
+          }
+        ],
+        // Apoio: unidades de SC (filtro na origem), de onde sai o codigoOrgao exigido em contratos.
+        // A operação só tem o parâmetro pagina; statusUasg é obrigatório.
+        "uasg": {
+          "endpoint": "uasg",
+          "caminho": "modulo-uasg/1_consultarUasg",
+          "filtros": { "statusUasg": "true" },
+          "parametroUf": "siglaUf",
+          "maxPaginas": 5
+        },
+        // Contratos exigem codigoOrgao e período de até 365 dias (Portal de Dados Abertos, p. 11,
+        // resposta da área técnica). filtrarUnidadeGestora: envia codigoUnidadeGestora = codigoUasg (dedução).
+        "contratos": {
+          "unidades": 5,
+          "filtrarUnidadeGestora": true,
+          "consultas": [
+            {
+              "endpoint": "contratos",
+              "caminho": "modulo-contratos/1_consultarContratos",
+              "filtros": { "dataVigenciaInicialMin": "2026-01-01", "dataVigenciaInicialMax": "2026-10-31" },
+              "tamanhoPagina": 100,
+              "maxPaginas": 3
+            },
+            {
+              "endpoint": "contratos-fim-vigencia",
+              "caminho": "modulo-contratos/1.2_consultarContratos_FimVigencia",
+              "filtros": { "dataVigenciaFinalMin": "2026-11-01", "dataVigenciaFinalMax": "2027-10-31" },
+              "tamanhoPagina": 100,
+              "maxPaginas": 2
+            },
+            {
+              "endpoint": "contratos-itens",
+              "caminho": "modulo-contratos/2_consultarContratosItem",
+              "filtros": { "dataVigenciaInicialMin": "2026-01-01", "dataVigenciaInicialMax": "2026-10-31" },
+              "tamanhoPagina": 100,
+              "maxPaginas": 2
+            }
+          ],
+          // Fornecedores vistos nos contratos: filtro niFornecedor ("contratos-fornecedor") e
+          // busca no cadastro ("fornecedores-cnpj").
+          "cruzarFornecedores": 10
+        }
+      }
+    }
+  }
 }
