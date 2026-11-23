@@ -9,8 +9,10 @@
       "baseUrl": "https://pncp.gov.br/api/consulta",
       "timeoutSegundos": 90,
       "maxTentativas": 3,
-      "limitePorMinuto": null,
-      "origemLimite": "Não informado (fichas 1 e 2, Condições de uso: limite de requisições não informado)",
+      // Limite não documentado. Execução 20261122-222915 recebeu 429 na 15ª requisição (~39/min,
+      // sem Retry-After nem cabeçalhos de limite). Adotado 20/min (12/min efetivos com fracaoLimite 0,6).
+      "limitePorMinuto": 20,
+      "origemLimite": "Não informado (fichas 1 e 2, Condições de uso); valor empírico após 429 em ~39 req/min na execução 20261122-222915",
       "parametros": {
         // API de Integração (ficha 1; manual de Integração §5.3). Só GET públicos por chave.
         "baseUrlIntegracao": "https://pncp.gov.br/api/pncp",
