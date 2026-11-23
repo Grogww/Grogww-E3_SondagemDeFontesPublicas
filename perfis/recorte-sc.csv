@@ -1,0 +1,60 @@
+﻿fonte;execucao;endpoint;recorte;campo_uf;nota;respostas_com_registros;respostas_sem_registros;respostas_nao_json;arquivos_lidos;linhas_malformadas;registros;registros_sc;pct_sc;registros_outra_uf;registros_sem_uf;outras_ufs;registros_filtro_origem;pct_sc_no_filtro_origem
+cndt;20261122-222327;pagina-apresentacao;nao-se-aplica;;;0;0;1;0;0;0;;;;;;0;
+cndt;20261122-222327;pagina-emissao;nao-se-aplica;;;0;0;1;0;0;0;;;;;;0;
+cnpj;20261122-222329;listagem-cnpj;nao-se-aplica;;;0;0;2;0;0;0;;;;;;0;
+cnpj;20261122-222329;listagem-ecf;nao-se-aplica;;;0;0;1;0;0;0;;;;;;0;
+cnpj;20261122-222329;listagem-raiz;nao-se-aplica;;;0;0;1;0;0;0;;;;;;0;
+cnpj;20261122-222329;pagina-conjunto;nao-se-aplica;;;0;0;1;0;0;0;;;;;;0;
+pncp;20261122-222915;contratacoes-publicacao;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;5;0;0;0;0;177;177;100,0;0;0;;177;100,0
+pncp;20261122-222915;dominio-modalidades;nao-se-aplica;;;1;0;0;0;0;20;;;;;;0;
+pncp;20261122-222915;dominio-modos-disputas;nao-se-aplica;;;1;0;0;0;0;6;;;;;;0;
+pncp;20261122-222915;dominio-naturezas-juridicas;nao-se-aplica;;;1;0;0;0;0;96;;;;;;0;
+pncp;20261122-222915;dominio-portes-empresa;nao-se-aplica;;;1;0;0;0;0;6;;;;;;0;
+pncp;20261122-222915;dominio-situacoes-resultado;nao-se-aplica;;;1;0;0;0;0;4;;;;;;0;
+pncp;20261122-222915;dominio-tipos-contratos;nao-se-aplica;;;1;0;0;0;0;12;;;;;;0;
+pncp;20261122-223518;atas;sem-uf;;o retorno não traz UF;3;0;0;0;0;1500;;;;;;0;
+pncp;20261122-223518;atas-atualizacao;sem-uf;;o retorno não traz UF;2;0;0;0;0;1000;;;;;;0;
+pncp;20261122-223518;compra-atas;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;7;0;0;0;0;59;59;100,0;0;0;;0;
+pncp;20261122-223518;compra-contratos;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;20;0;0;0;0;24;24;100,0;0;0;;0;
+pncp;20261122-223518;compra-item-resultados;campo;localidadeFornecedor.uf;UF do fornecedor, não do órgão;90;0;0;0;0;117;19;16,2;8;90;MG PR SP;0;
+pncp;20261122-223518;compra-itens;herdado;;itens de contratações de SC;85;0;0;0;0;898;898;100,0;;;;0;
+pncp;20261122-223518;contratacao-chave;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;85;0;0;0;0;85;85;100,0;0;0;;0;
+pncp;20261122-223518;contratacoes-atualizacao;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;6;0;0;0;0;300;300;100,0;0;0;;300;100,0
+pncp;20261122-223518;contratacoes-proposta;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;5;0;0;0;0;250;250;100,0;0;0;;250;100,0
+pncp;20261122-223518;contratacoes-publicacao;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;50;0;0;0;0;2273;2273;100,0;0;0;;2273;100,0
+pncp;20261122-223518;contrato-chave;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;20;0;0;0;0;20;20;100,0;0;0;;0;
+pncp;20261122-223518;contratos;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;5;0;0;0;0;2500;689;27,6;1811;0;AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SE SP TO;0;
+pncp;20261122-223518;contratos-atualizacao;campo;unidadeOrgao.ufSigla;UF da unidade do órgão contratante;2;0;0;0;0;1000;163;16,3;837;0;AC AL AM BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SE SP TO;0;
+pncp;20261122-223518;dominio-modalidades;nao-se-aplica;;;1;0;0;0;0;20;;;;;;0;
+pncp;20261122-223518;dominio-modos-disputas;nao-se-aplica;;;1;0;0;0;0;6;;;;;;0;
+pncp;20261122-223518;dominio-naturezas-juridicas;nao-se-aplica;;;1;0;0;0;0;96;;;;;;0;
+pncp;20261122-223518;dominio-portes-empresa;nao-se-aplica;;;1;0;0;0;0;6;;;;;;0;
+pncp;20261122-223518;dominio-situacoes-resultado;nao-se-aplica;;;1;0;0;0;0;4;;;;;;0;
+pncp;20261122-223518;dominio-tipos-contratos;nao-se-aplica;;;1;0;0;0;0;12;;;;;;0;
+pncp;20261122-223518;instrumentos-cobranca;campo;recuperarContratoDTO.unidadeOrgao.ufSigla;UF da unidade do órgão do contrato;3;0;0;0;0;300;6;2,0;294;0;AC AL AM BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RS SE SP TO;0;
+pncp;20261122-223518;orgao;herdado;;"órgãos de contratos de SC; o retorno não traz UF";10;0;0;0;0;10;10;100,0;;;;0;
+pncp;20261122-223518;orgao-unidades;campo;municipio.uf.siglaUF;UF do município da unidade;10;0;0;0;0;167;167;100,0;0;0;;0;
+portal-transparencia;20261122-222619;ceis;campo;orgaoSancionador.siglaUf;UF do órgão sancionador, não da empresa sancionada;23;1;0;0;0;342;15;4,4;315;12;AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SE SP TO;0;
+portal-transparencia;20261122-222619;ceis-cnpj;campo;orgaoSancionador.siglaUf;UF do órgão sancionador, não da empresa sancionada;11;16;0;0;0;26;15;57,7;11;0;DF MG PA PR RJ RN RS SP;0;
+portal-transparencia;20261122-222619;ceis-id;campo;orgaoSancionador.siglaUf;UF do órgão sancionador, não da empresa sancionada;10;0;0;0;0;10;10;100,0;0;0;;0;
+portal-transparencia;20261122-222619;cepim;sem-uf;;"filtro ufSancionado na origem; o retorno não traz UF";8;1;0;0;0;116;;;;;;71;
+portal-transparencia;20261122-222619;cepim-cnpj;sem-uf;;o retorno não traz UF;10;17;0;0;0;10;;;;;;0;
+portal-transparencia;20261122-222619;cepim-id;herdado;;detalhe de registros obtidos com ufSancionado=SC;10;0;0;0;0;10;10;100,0;;;;0;
+portal-transparencia;20261122-222619;cnep;campo;orgaoSancionador.siglaUf;UF do órgão sancionador, não da empresa sancionada;20;1;0;0;0;300;11;3,7;159;130;CE DF ES GO MG MS PA PE PI PR RJ RN RS SP;0;
+portal-transparencia;20261122-222619;cnep-cnpj;campo;orgaoSancionador.siglaUf;UF do órgão sancionador, não da empresa sancionada;9;18;0;0;0;14;14;100,0;0;0;;0;
+portal-transparencia;20261122-222619;cnep-id;campo;orgaoSancionador.siglaUf;UF do órgão sancionador, não da empresa sancionada;10;0;0;0;0;10;10;100,0;0;0;;0;
+sicaf;20261122-222919;arp-itens-fornecedor;sem-uf;;;1;19;0;0;0;2;;;;;;0;
+sicaf;20261122-222919;contratos;sem-uf;;;2;3;0;0;0;58;;;;;;0;
+sicaf;20261122-222919;contratos-fim-vigencia;sem-uf;;;1;4;0;0;0;89;;;;;;0;
+sicaf;20261122-222919;contratos-fornecedor;sem-uf;;;10;0;0;0;0;16;;;;;;0;
+sicaf;20261122-222919;contratos-itens;sem-uf;;;2;3;0;0;0;94;;;;;;0;
+sicaf;20261122-222919;fornecedores;campo;ufSigla;UF do fornecedor;45;0;0;0;0;22500;1032;4,6;21463;5;AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SE SP TO;0;
+sicaf;20261122-222919;fornecedores-cnpj;campo;ufSigla;UF do fornecedor;30;0;0;0;0;30;23;76,7;7;0;MG PR SP;0;
+sicaf;20261122-222919;fornecedores-filtro;campo;ufSigla;UF do fornecedor;14;0;0;0;0;7000;330;4,7;6670;0;AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SE SP TO;0;
+sicaf;20261122-222919;resultados-fornecedor;campo;ufFornecedor;UF do fornecedor;4;16;0;0;0;12;0;0,0;0;12;;0;
+sicaf;20261122-222919;uasg;campo;siglaUf;UF da UASG;2;0;0;0;0;779;779;100,0;0;0;;779;100,0
+transparencia-sc;20261122-222340;dados-abertos;nao-se-aplica;;;0;0;1;0;0;0;;;;;;0;
+transparencia-sc;20261122-222340;dados-abertos-despesa;nao-se-aplica;;;0;0;0;0;0;0;;;;;;0;
+transparencia-sc;20261122-222340;despesa-indicador;nao-se-aplica;;;0;0;0;0;0;0;;;;;;0;
+transparencia-sc;20261122-222340;despesa-mensal;fonte;;despesa do Executivo estadual de SC;0;0;0;4;0;186812;186812;100,0;;;;0;
+transparencia-sc;20261122-222340;pagina-inicial;nao-se-aplica;;;0;0;1;0;0;0;;;;;;0;

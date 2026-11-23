@@ -1,0 +1,2 @@
+﻿fonte;execucao;endpoint;chave;ordem_tentativa;segundos_desde_inicio;tentativas_ultimos_60s;ritmo_configurado_min;retry_after;headers_limite
+pncp;20261122-222915;contratacoes-publicacao;"dataInicial=20260801;dataFinal=20260831;uf=SC;codigoModalidadeContratacao=4;pagina=4;tamanhoPagina=50";15;23,3;15;36;;

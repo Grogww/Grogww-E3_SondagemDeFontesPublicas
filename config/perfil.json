@@ -1,0 +1,75 @@
+{
+  // Regras do perfilador (src/Sonda.Perfilador). Ele só lê dados/; não faz acesso à rede.
+  //
+  // vazio: respostas não-2xx que a fonte usa para dizer "não há dados". Contam como resultado
+  //   vazio, não como erro. O 204 é sempre vazio, sem precisar de regra.
+  // recorte (por endpoint, ou "padrao" para a fonte):
+  //   "campo"         -> registro é de SC quando o atributo "campoUf" vale "uf";
+  //   "fonte"         -> a fonte inteira é de SC (ex.: Executivo estadual);
+  //   "herdado"       -> a requisição parte de um registro de SC (detalhe por chave) e o retorno não traz UF;
+  //   "sem-uf"        -> não há como identificar SC;
+  //   "nao-se-aplica" -> tabelas de domínio, Swagger, páginas.
+  //   Filtro na origem (parâmetro de UF = SC na URL) é detectado sozinho; com "campo", o
+  //   perfilador também mede se o filtro foi respeitado.
+  // nota: significado do recorte, levado para o relatório.
+  "uf": "SC",
+  "parametrosUf": ["uf", "siglaUf", "ufSigla", "ufSancionado"],
+  // Textos que a fonte usa no lugar de um valor ausente (contam como "marcador", não como preenchido).
+  "marcadores": ["Sem informação", "Sem Informação", "Não informado", "Não Informado"],
+  "fontes": {
+    "pncp": {
+      "vazio": [
+        { "endpoint": "compra-contratos", "status": 404, "mensagemContem": "Não há contrato publicado" }
+      ],
+      "padrao": { "recorte": "campo", "campoUf": "unidadeOrgao.ufSigla", "nota": "UF da unidade do órgão contratante" },
+      "endpoints": {
+        "swagger": { "recorte": "nao-se-aplica" },
+        "dominio-modalidades": { "recorte": "nao-se-aplica" },
+        "dominio-modos-disputas": { "recorte": "nao-se-aplica" },
+        "dominio-naturezas-juridicas": { "recorte": "nao-se-aplica" },
+        "dominio-portes-empresa": { "recorte": "nao-se-aplica" },
+        "dominio-situacoes-resultado": { "recorte": "nao-se-aplica" },
+        "dominio-tipos-contratos": { "recorte": "nao-se-aplica" },
+        "atas": { "recorte": "sem-uf", "nota": "o retorno não traz UF" },
+        "atas-atualizacao": { "recorte": "sem-uf", "nota": "o retorno não traz UF" },
+        "compra-itens": { "recorte": "herdado", "nota": "itens de contratações de SC" },
+        "compra-item-resultados": { "recorte": "campo", "campoUf": "localidadeFornecedor.uf", "nota": "UF do fornecedor, não do órgão" },
+        "instrumentos-cobranca": { "recorte": "campo", "campoUf": "recuperarContratoDTO.unidadeOrgao.ufSigla", "nota": "UF da unidade do órgão do contrato" },
+        "orgao": { "recorte": "herdado", "nota": "órgãos de contratos de SC; o retorno não traz UF" },
+        "orgao-unidades": { "recorte": "campo", "campoUf": "municipio.uf.siglaUF", "nota": "UF do município da unidade" }
+      }
+    },
+    "portal-transparencia": {
+      "padrao": { "recorte": "campo", "campoUf": "orgaoSancionador.siglaUf", "nota": "UF do órgão sancionador, não da empresa sancionada" },
+      "endpoints": {
+        "swagger": { "recorte": "nao-se-aplica" },
+        "cepim": { "recorte": "sem-uf", "nota": "filtro ufSancionado na origem; o retorno não traz UF" },
+        "cepim-cnpj": { "recorte": "sem-uf", "nota": "o retorno não traz UF" },
+        "cepim-id": { "recorte": "herdado", "nota": "detalhe de registros obtidos com ufSancionado=SC" }
+      }
+    },
+    "sicaf": {
+      "padrao": { "recorte": "sem-uf" },
+      "endpoints": {
+        "swagger": { "recorte": "nao-se-aplica" },
+        "fornecedores": { "recorte": "campo", "campoUf": "ufSigla", "nota": "UF do fornecedor" },
+        "fornecedores-filtro": { "recorte": "campo", "campoUf": "ufSigla", "nota": "UF do fornecedor" },
+        "fornecedores-cnpj": { "recorte": "campo", "campoUf": "ufSigla", "nota": "UF do fornecedor" },
+        "resultados-fornecedor": { "recorte": "campo", "campoUf": "ufFornecedor", "nota": "UF do fornecedor" },
+        "uasg": { "recorte": "campo", "campoUf": "siglaUf", "nota": "UF da UASG" }
+      }
+    },
+    "transparencia-sc": {
+      "padrao": { "recorte": "nao-se-aplica" },
+      "endpoints": {
+        "despesa-mensal": { "recorte": "fonte", "nota": "despesa do Executivo estadual de SC" }
+      },
+      // Arquivos baixados (BaixarAsync) cujo conteúdo é perfilado: ZIP com CSV, ou CSV solto.
+      "arquivos": [
+        { "endpoint": "despesa-mensal", "pasta": "arquivos/despesa", "codificacao": "latin1", "separador": ";" }
+      ]
+    },
+    "cnpj": { "padrao": { "recorte": "nao-se-aplica" } },
+    "cndt": { "padrao": { "recorte": "nao-se-aplica" } }
+  }
+}
