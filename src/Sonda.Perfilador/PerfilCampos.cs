@@ -114,7 +114,7 @@ public sealed class PerfilCampos
                 if (status == 204) continue;
                 if (!ehJson) { p.RespostasNaoJson++; continue; }
 
-                var registros = Registros(corpo).ToList();
+                var registros = (p.Recorte.Registros is { } local ? RegistrosEm(corpo, local.Split('.'), 0) : Registros(corpo)).ToList();
                 if (registros.Count == 0) { p.RespostasSemRegistros++; continue; }
                 p.RespostasComRegistros++;
                 var filtroOrigem = FiltroNaOrigem(r.GetProperty("url").GetString()!);
@@ -132,6 +132,18 @@ public sealed class PerfilCampos
             if (corpo.TryGetProperty(nome, out var lista) && lista.ValueKind == JsonValueKind.Array)
                 return lista.EnumerateArray();
         return [corpo];
+    }
+
+    /// <summary>Registros no caminho da regra; atributo ausente = nenhum registro.</summary>
+    private static IEnumerable<JsonElement> RegistrosEm(JsonElement e, string[] partes, int i)
+    {
+        if (i == partes.Length)
+            return e.ValueKind == JsonValueKind.Array ? e.EnumerateArray() : [e];
+        var nome = partes[i].EndsWith("[]") ? partes[i][..^2] : partes[i];
+        if (e.ValueKind != JsonValueKind.Object || !e.TryGetProperty(nome, out var v)) return [];
+        return partes[i].EndsWith("[]") && v.ValueKind == JsonValueKind.Array
+            ? v.EnumerateArray().SelectMany(x => RegistrosEm(x, partes, i + 1)).ToList()
+            : RegistrosEm(v, partes, i + 1);
     }
 
     private bool FiltroNaOrigem(string url)

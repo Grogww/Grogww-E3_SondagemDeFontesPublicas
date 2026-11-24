@@ -88,6 +88,11 @@ public sealed class RegraRecorte
     public string Recorte { get; set; } = "sem-uf";
     public string? CampoUf { get; set; }
     public string? Nota { get; set; }
+    /// <summary>
+    /// Onde estão os registros no corpo, quando não é a raiz nem data/resultado/...
+    /// Atributos separados por ponto; "[]" desce em cada elemento (ex.: "grupolink[].links").
+    /// </summary>
+    public string? Registros { get; set; }
 }
 
 /// <summary>Arquivos baixados com conteúdo tabular (ZIP com CSV, ou CSV).</summary>

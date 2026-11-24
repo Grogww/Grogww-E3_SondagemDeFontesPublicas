@@ -229,28 +229,53 @@
       "baseUrl": "https://www.transparencia.sc.gov.br",
       "timeoutSegundos": 60,
       "maxTentativas": 3,
+      // Sem limite declarado: base de 60/min (36/min efetivos com fracaoLimite 0,6).
       "limitePorMinuto": null,
-      "origemLimite": "Não informado (ficha 8, Condições de uso: limite de requisições não informado)",
+      "origemLimite": "Não informado (ficha 8, Condições de uso: limite de requisições não informado). API interna: x-ratelimit-limit: 300 (cabeçalho de resposta observado na inspeção do navegador, janela não informada)",
       "parametros": {
+        // API JSON interna do portal, NÃO DOCUMENTADA: descoberta pela inspeção do navegador em
+        // 2026-11-23 (as páginas de consulta são rotas de SPA e dão 404 quando acessadas direto;
+        // execução 20261122-222340). Não consta da ficha 8 nem de documento do portal; sem
+        // garantia de estabilidade. O navegador envia Origin/Referer do portal e o CORS só libera
+        // essa origem; a sonda não imita o navegador (só o User-Agent acima). Recusa da API é
+        // resultado da sondagem e não é contornada.
+        "api": {
+          "baseUrl": "https://api-portal-transparencia.apps.sm.okd4.ciasc.sc.gov.br",
+          "ano": 2026,
+          // Despesa anual por área, os mesmos indicadores das páginas do PDF da página inicial (p. 1).
+          "indicadores": [
+            { "id": 2317, "area": "educacao" },
+            { "id": 2304, "area": "saude" },
+            { "id": 2322, "area": "seguranca" },
+            { "id": 2337, "area": "agricultura" },
+            { "id": 2327, "area": "transporte" }
+          ],
+          "consultas": [
+            // Data e situação da última carga da despesa (latência de alimentação).
+            { "endpoint": "api-processo-carga", "chave": "contexto=DESPESA", "url": "api/processo-carga?contexto=DESPESA" },
+            // Despesa por área no exercício (lista "detalhe", por grupo de natureza da despesa).
+            { "endpoint": "api-despesa", "porIndicador": true, "url": "api/despesa?indicador={indicador}&anomesinifiltro%5B%5D={ano}01&anomesfimfiltro%5B%5D={ano}12" },
+            // Série anual da área desde 2011 ("valoresAno") e valores do mês.
+            { "endpoint": "api-despesa-macrocontexto", "porIndicador": true, "url": "api/despesa/macrocontexto?ano={ano}&indicador={indicador}" }
+          ],
+          // Lista dos arquivos de Dados Abertos de Despesa (grupolink[].links[]: "caminho" e
+          // "arquivo1"; um grupo por ano e o grupo "Dicionário de Dados"). Dela saem os nomes dos
+          // arquivos baixados abaixo.
+          "lista": { "endpoint": "api-subareainteresse", "chave": "id=35", "url": "api/subareainteresse?id=35" }
+        },
         // Só endereços que constam dos links do PDF da página inicial (p. 1 e p. 3) e de
         // texto_dados-abertos-despesa.txt. Receita Detalhada e Despesa Detalhada não têm
         // endereço documentado.
         "paginas": [
           { "endpoint": "pagina-inicial", "chave": "pagina", "url": "" },
-          // Despesa anual por área, exercício 2026 (PDF, p. 1).
-          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2317;area=educacao", "url": "despesa/2026/indicador/2317" },
-          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2304;area=saude", "url": "despesa/2026/indicador/2304" },
-          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2322;area=seguranca", "url": "despesa/2026/indicador/2322" },
-          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2337;area=agricultura", "url": "despesa/2026/indicador/2337" },
-          { "endpoint": "despesa-indicador", "chave": "ano=2026;indicador=2327;area=transporte", "url": "despesa/2026/indicador/2327" },
-          // Destino do botão "Acesse" de Dados Abertos (PDF, p. 3); outro domínio.
+          // Destino do botão "Acesse" de Dados Abertos (PDF, p. 3); outro domínio (CKAN 2.8.3).
+          // O 500 da execução 20261122-222340 foi pontual (a página abriu no navegador).
           { "endpoint": "dados-abertos", "chave": "pagina", "url": "https://dados.sc.gov.br/" },
-          // Menu Despesa > Dados Abertos > Despesa: lista os arquivos mensais e o dicionário.
-          { "endpoint": "dados-abertos-despesa", "chave": "pagina", "url": "dados-abertos/32/subareainteresse/35" },
           // Conjunto no portal de dados abertos do Estado; aponta de volta para o portal.
           { "endpoint": "dados-abertos", "chave": "dataset=despesa-do-poder-executivo", "url": "https://dados.sc.gov.br/dataset/despesa-do-poder-executivo" }
         ],
-        // Dicionário de dados da despesa (link da página "Dados Abertos de Despesa"). Vazio = não baixar.
+        // Dicionário de dados da despesa. O endereço vem da lista da subárea; este só é usado se a
+        // lista não trouxer o arquivo. Vazio = não baixar.
         "dicionario": {
           "endpoint": "dicionario-despesa",
           "chave": "arquivo",
@@ -258,11 +283,14 @@
           "arquivo": "arquivos/despesa/dicionario-de-dados-despesa.pdf"
         },
         // Arquivos mensais de despesa (ZIP com um CSV), de 2011-01 a 2026-10 na listagem de
-        // 2026-11-15. Amostra fixa: os meses dados como exemplo na página e o primeiro da série.
-        // Cada ZIP tem cerca de 7 MB (2026-10).
-        "despesa": {
+        // 2026-11-15. Endereço: <baseUrl>/<caminho>/<arquivo1>, com "caminho" sem "/" nas pontas
+        // (dedução a partir das URLs de 2026 que funcionaram). A convenção de nomes é
+        // inconsistente (despesa_2011_1.zip, 2017 misto), por isso não há modelo de URL.
+        // Amostra fixa: os meses dados como exemplo na página e o primeiro da série; mês ausente
+        // da lista é registrado. Cada ZIP tem cerca de 7 MB (2026-10).
+        "arquivos": {
           "endpoint": "despesa-mensal",
-          "modeloUrl": "https://arquivos.transparencia.sc.gov.br/transparenciasc/dados-abertos/despesa/{ano}/despesa_{ano}_{mes}.zip",
+          "baseUrl": "https://arquivos.transparencia.sc.gov.br/transparenciasc",
           "meses": [ "2026-10", "2026-01", "2025-12", "2023-11", "2011-01" ]
         }
       }

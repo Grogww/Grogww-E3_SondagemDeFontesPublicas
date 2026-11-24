@@ -74,7 +74,13 @@
     "transparencia-sc": {
       "padrao": { "recorte": "nao-se-aplica" },
       "endpoints": {
-        "despesa-mensal": { "recorte": "fonte", "nota": "despesa do Executivo estadual de SC" }
+        "despesa-mensal": { "recorte": "fonte", "nota": "despesa do Executivo estadual de SC" },
+        // API interna não documentada (inspeção do navegador, 2026-11-23). registros: onde está a lista no corpo.
+        "api-despesa": { "recorte": "fonte", "registros": "detalhe", "nota": "despesa do Executivo estadual de SC, por grupo de natureza da despesa" },
+        // Série e situação da carga: um objeto de agregados por resposta, não uma tabela de registros.
+        "api-despesa-macrocontexto": { "recorte": "nao-se-aplica", "nota": "agregados da área (série anual e mensal), não registros" },
+        "api-processo-carga": { "recorte": "nao-se-aplica", "nota": "data e situação da última carga da despesa" },
+        "api-subareainteresse": { "recorte": "nao-se-aplica", "registros": "grupolink[].links", "nota": "lista dos arquivos de dados abertos (um registro por link)" }
       },
       // Arquivos baixados (BaixarAsync) cujo conteúdo é perfilado: ZIP com CSV, ou CSV solto.
       "arquivos": [
