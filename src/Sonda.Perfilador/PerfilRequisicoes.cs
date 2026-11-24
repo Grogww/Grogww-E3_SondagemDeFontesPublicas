@@ -9,7 +9,7 @@ public sealed record Tentativa(
     Dictionary<string, string>? HeadersLimite, string? Erro);
 
 /// <summary>Resultado de uma requisição (tentativa final), na ótica da sondagem.</summary>
-public enum Desfecho { Ok, Vazio, Erro4xx, Erro5xx, FalhaRede, Limite429 }
+public enum Desfecho { Ok, Vazio, SemConteudo, Erro4xx, Erro5xx, FalhaRede, Limite429 }
 
 /// <summary>Métricas de acesso de um endpoint numa execução.</summary>
 public sealed class MetricasEndpoint
@@ -83,6 +83,13 @@ public static class PerfilRequisicoes
             var c = corpo(t.Endpoint, t.Chave);
             if (c is not null && c.Contem(v.MensagemContem)) return Desfecho.Vazio;
         }
+        if (t.Status is >= 200 and < 300)
+            foreach (var s in regras.SemConteudo)
+            {
+                if (!s.Endpoints.Contains(t.Endpoint)) continue;
+                var c = corpo(t.Endpoint, t.Chave);
+                if (c is not null && !c.Casa(s.Regex)) return Desfecho.SemConteudo;
+            }
         return t.Status switch
         {
             >= 200 and < 300 => Desfecho.Ok,

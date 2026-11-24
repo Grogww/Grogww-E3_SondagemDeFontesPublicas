@@ -16,6 +16,18 @@
   "parametrosUf": ["uf", "siglaUf", "ufSigla", "ufSancionado"],
   // Textos que a fonte usa no lugar de um valor ausente (contam como "marcador", não como preenchido).
   "marcadores": ["Sem informação", "Sem Informação", "Não informado", "Não Informado"],
+  // Rodadas de coleta, pela data de início da execução (faixa inclusiva). A execução 2 entra aqui.
+  "rodadas": [
+    { "numero": 1, "inicio": "2026-11-22", "fim": "2026-11-23" }
+  ],
+  // Papel de cada execução ("fonte/id"). Sem entrada: principal, entra nos números da rodada.
+  // evidencia-429: aparece só na tabela de 429, fora dos números consolidados.
+  "execucoes": {
+    "pncp/20261122-222915": {
+      "papel": "evidencia-429",
+      "nota": "interrompida por 429 a ~36 req/min; substituída por 20261122-223518, com limite de 20/min"
+    }
+  },
   "fontes": {
     "pncp": {
       "vazio": [
@@ -69,7 +81,17 @@
         { "endpoint": "despesa-mensal", "pasta": "arquivos/despesa", "codificacao": "latin1", "separador": ";" }
       ]
     },
-    "cnpj": { "padrao": { "recorte": "nao-se-aplica" } },
+    "cnpj": {
+      "padrao": { "recorte": "nao-se-aplica" },
+      // sem-conteudo: 2xx cujo corpo não tem o que se esperava (nem OK, nem erro).
+      "semConteudo": [
+        {
+          "endpoints": ["listagem-raiz", "listagem-cnpj", "listagem-ecf"],
+          "exige": "\\.zip|\\b20\\d{2}-\\d{2}\\b",
+          "nota": "página \"casca\" do Nextcloud: a lista de arquivos e pastas é montada por script e não vem no HTML"
+        }
+      ]
+    },
     "cndt": { "padrao": { "recorte": "nao-se-aplica" } }
   }
 }

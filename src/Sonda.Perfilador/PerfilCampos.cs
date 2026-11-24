@@ -11,6 +11,8 @@ public sealed class CorpoBruto(string texto, JsonElement? json)
         texto.Contains(trecho, StringComparison.OrdinalIgnoreCase)
         || (json is { } j && TextosDe(j).Any(s => s.Contains(trecho, StringComparison.OrdinalIgnoreCase)));
 
+    public bool Casa(System.Text.RegularExpressions.Regex re) => re.IsMatch(texto);
+
     private static IEnumerable<string> TextosDe(JsonElement e) => e.ValueKind switch
     {
         JsonValueKind.String => [e.GetString()!],
@@ -51,6 +53,14 @@ public sealed class PerfilEndpointCampos
 
     /// <summary>Há como contar SC neste endpoint?</summary>
     public bool ContaSc => Recorte.Recorte is "campo" or "fonte" or "herdado";
+
+    /// <summary>Registros em que a UF pôde ser lida (no recorte por campo, exclui os sem UF).</summary>
+    public long RegistrosComUf => Recorte.Recorte == "campo" ? Registros - RegistrosSemUf : Registros;
+
+    /// <summary>% de SC sobre os registros com UF; nulo quando não há como saber (todos sem UF).</summary>
+    public double? FracaoSc => ContaSc && RegistrosComUf > 0 ? (double)RegistrosSc / RegistrosComUf : null;
+
+    public double? FracaoSemUf => Recorte.Recorte == "campo" && Registros > 0 ? (double)RegistrosSemUf / Registros : null;
 }
 
 public sealed class PerfilCampos
@@ -60,8 +70,8 @@ public sealed class PerfilCampos
     private readonly HashSet<string> _marcadores;
 
     public Dictionary<string, PerfilEndpointCampos> PorEndpoint { get; } = new();
-    /// <summary>(endpoint, chave) → corpo das respostas não-2xx.</summary>
-    public Dictionary<(string, string), CorpoBruto> NaoSucesso { get; } = new();
+    /// <summary>(endpoint, chave) → corpo das respostas não-2xx e dos endpoints com regra de "sem conteúdo".</summary>
+    public Dictionary<(string, string), CorpoBruto> Corpos { get; } = new();
 
     public PerfilCampos(RegrasPerfil regras, RegrasFonte fonte)
     {
@@ -95,13 +105,12 @@ public sealed class PerfilCampos
                 var status = r.GetProperty("status").GetInt32();
                 var ehJson = r.GetProperty("corpoJson").GetBoolean();
                 var corpo = r.GetProperty("corpo");
-                if (status is < 200 or >= 300)
-                {
-                    NaoSucesso[(p.Endpoint, r.GetProperty("chave").GetString()!)] = ehJson
+                var guardar = status is < 200 or >= 300 || _fonte.SemConteudo.Any(s => s.Endpoints.Contains(p.Endpoint));
+                if (guardar)
+                    Corpos[(p.Endpoint, r.GetProperty("chave").GetString()!)] = ehJson
                         ? new CorpoBruto(corpo.GetRawText(), corpo.Clone())
                         : new CorpoBruto(corpo.GetString() ?? "", null);
-                    continue;
-                }
+                if (status is < 200 or >= 300) continue;
                 if (status == 204) continue;
                 if (!ehJson) { p.RespostasNaoJson++; continue; }
 

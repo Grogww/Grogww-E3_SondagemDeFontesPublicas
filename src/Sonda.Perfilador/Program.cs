@@ -72,6 +72,8 @@ public sealed class PerfilExecucao
     public Dictionary<string, MetricasEndpoint> Endpoints { get; init; } = new();
     public List<Evento429> Eventos429 { get; init; } = new();
     public PerfilCampos Campos { get; init; } = null!;
+    public PapelExecucao Papel { get; init; } = new();
+    public int? Rodada { get; init; }
 
     public double RitmoConfigurado => (LimitePorMinuto ?? 60) * FracaoLimite;
 
@@ -117,11 +119,12 @@ public sealed class PerfilExecucao
 
         var tentativas = PerfilRequisicoes.Ler(Path.Combine(pasta, "requisicoes.jsonl"));
         var endpoints = PerfilRequisicoes.Agregar(tentativas, regrasFonte,
-            (ep, chave) => campos.NaoSucesso.GetValueOrDefault((ep, chave)));
+            (ep, chave) => campos.Corpos.GetValueOrDefault((ep, chave)));
 
         return new PerfilExecucao
         {
             Fonte = fonte, Id = id, Segmentos = segmentos, LimitePorMinuto = limite, FracaoLimite = fracao,
+            Papel = regras.Papel(fonte, id), Rodada = regras.RodadaDe(segmentos[0].Inicio),
             Tentativas = tentativas, Endpoints = endpoints, Eventos429 = PerfilRequisicoes.Eventos429(tentativas),
             Campos = campos,
         };
