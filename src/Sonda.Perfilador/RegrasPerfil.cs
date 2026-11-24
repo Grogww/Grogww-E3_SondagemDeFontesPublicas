@@ -41,7 +41,7 @@ public sealed class Rodada
 
 public sealed class PapelExecucao
 {
-    /// <summary>principal · evidencia-429 (entra só na tabela de 429, fora dos números da rodada)</summary>
+    /// <summary>principal · evidencia-429 (só na tabela de 429) · evidencia (só na lista de evidências); as duas ficam fora dos números da rodada</summary>
     public string Papel { get; set; } = "principal";
     public string? Nota { get; set; }
     public bool Principal => Papel == "principal";

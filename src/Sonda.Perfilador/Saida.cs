@@ -135,7 +135,7 @@ public static class Saida
         md.AppendLine("- **p50/p95** da latência total (até o fim do corpo) de todas as tentativas com resposta HTTP, por interpolação linear (igual ao PERCENTIL.INC). Em downloads, a latência inclui a transferência do arquivo.");
         md.AppendLine($"- **Preenchido** = valor não nulo, não vazio e diferente dos marcadores ({string.Join(", ", regras.Marcadores.Select(x => $"\"{x}\""))}). Em listas, o registro conta como preenchido se algum elemento tiver valor.");
         md.AppendLine($"- **% {uf}** é calculado sobre os registros **com UF**. *Sem UF* são registros em que o campo de UF veio nulo ou vazio, o que também é um achado de completude. Quando todos vêm sem UF, o % fica \"—\". A *nota* de cada endpoint diz a que UF o campo se refere.");
-        md.AppendLine("- Execuções marcadas como **evidência de 429** em `config/perfil.json` aparecem só na seção de limite de acessos, fora dos números das rodadas.");
+        md.AppendLine("- Execuções marcadas como **evidência de 429** em `config/perfil.json` aparecem só na seção de limite de acessos, e as marcadas como **evidência** só na lista de evidências; ambas ficam fora dos números das rodadas.");
         md.AppendLine();
 
         // Visão geral por rodada
@@ -159,6 +159,17 @@ public static class Saida
             md.AppendLine();
         }
 
+        // Execuções guardadas como evidência (sem 429): fora dos números, mas registradas.
+        var evidencias = execucoes.Where(e => !e.Papel.Principal && e.Eventos429.Count == 0).ToList();
+        if (evidencias.Count > 0)
+        {
+            md.AppendLine("## Execuções guardadas como evidência");
+            md.AppendLine();
+            foreach (var e in evidencias)
+                md.AppendLine($"- `{e.Fonte}/{e.Id}` ({e.Papel.Papel}): {e.Papel.Nota ?? "sem nota"}.");
+            md.AppendLine();
+        }
+
         // Limite de acessos
         md.AppendLine("## Limite de acessos (429)");
         md.AppendLine();
@@ -172,7 +183,7 @@ public static class Saida
             foreach (var ev in e.Eventos429)
                 md.AppendLine($"| {e.Fonte} | {e.Id} | {e.Papel.Papel} | {ev.Endpoint} | {ev.Ordem}ª | {Num(ev.SegundosDesdeInicio)} | {ev.TentativasUltimos60s} | {Num(e.RitmoConfigurado)} | {ev.RetryAfter ?? "ausente"} |");
             md.AppendLine();
-            foreach (var e in execucoes.Where(x => !x.Papel.Principal))
+            foreach (var e in com429.Where(x => !x.Papel.Principal))
                 md.AppendLine($"- `{e.Fonte}/{e.Id}` ({e.Papel.Papel}): {e.Papel.Nota ?? "sem nota"}.");
         }
         var semHeaders = execucoes.All(e => e.HeadersLimite.Count == 0);

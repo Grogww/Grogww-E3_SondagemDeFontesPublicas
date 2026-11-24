@@ -1440,63 +1440,135 @@ sicaf;20261122-222919;1;uasg;siglaUf;texto;779;779;0;0;0;0;100,0;779;779;100,0
 sicaf;20261122-222919;1;uasg;statusUasg;lógico;779;779;0;0;0;0;100,0;779;779;100,0
 sicaf;20261122-222919;1;uasg;uasgCadastradora;lógico;779;779;0;0;0;0;100,0;779;779;100,0
 sicaf;20261122-222919;1;uasg;usoSisg;lógico;779;779;0;0;0;0;100,0;779;779;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Ano;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Ação;texto (CSV);186812;186809;3;0;0;0;100,0;186812;186809;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Bimestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Categoria Econômica;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Credor;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Ação;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Categoria Econômica;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Credor;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Elemento;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Especificação Fonte;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Fonte Recurso;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Função;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Gestão;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Grupo Fonte Recurso;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Grupo Natureza Despesa;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Identificador Uso;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Modalidade Aplicação;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Poder;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Programa;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Subação;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Subelemento;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Subfunção;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Tipo Entidade;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Tipo Fonte;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Unidade Gestora;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Código Órgão;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Descrição Indicador Despesa Emergencial;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Elemento;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Especificação Fonte;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Fonte Recurso;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Função;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Gestão;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Grupo Fonte Recurso;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Grupo Natureza Despesa;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Identificador Uso;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Indicador Despesa Emergencial;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Modalidade Aplicação;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Mês;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Nro Bimestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Nro Mês;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Nro Quadrimestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Nro Semestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Nro Trimestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Poder;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Programa;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Quadrimestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Semestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Subação;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Subelemento;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Subfunção;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Tipo Entidade;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Tipo Fonte;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Trimestre;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Unidade Gestora;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Vl Dotação Atualizada;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Vl Dotação Inicial;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Vl Empenhado;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Vl Liquidado;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Vl Pago Orçamentário;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
-transparencia-sc;20261122-222340;1;despesa-mensal;Órgão;texto (CSV);186812;186812;0;0;0;0;100,0;186812;186812;100,0
+transparencia-sc;20261123-215022;1;api-despesa;codigo;texto;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa;codigoexibicao;texto;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa;descricao;texto;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa;vldotacaoatualizada;número;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa;vldotacaoinicial;número;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa;vlempenhado;número;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa;vlliquidado;número;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa;vlpago;número;21;21;0;0;0;0;100,0;21;21;100,0
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;anoUltimaCarga;número;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;dadosIndicador;objeto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;dadosIndicador.cdindicador;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;dadosIndicador.cdindicadorpai;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;dadosIndicador.deindicador;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;dadosIndicador.nmindicador;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;dadosIndicador.nmindicadorpai;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;mesUltimaCarga;número;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valorMesAtual;número;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno;objeto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.anos;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.anos[];texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.empenhado;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.empenhado[];número;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.liquidado;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.liquidado[];número;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.pago;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresAno.pago[];número;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresMes;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresMes[];objeto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresMes[].ano;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresMes[].valores;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresMes[].valores[];número;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes;lista;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes[];objeto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes[].cdindicador;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes[].nmindicador;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes[].vlempenhado;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes[].vlliquidado;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes[].vlpago;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipaisMes[].vlprincipal;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais[];objeto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais[].cdindicador;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais[].nmindicador;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais[].vlempenhado;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais[].vlliquidado;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais[].vlpago;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;valoresPrincipais[].vlprincipal;texto;5;5;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status;objeto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA;objeto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.contexto;texto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.dataexecucao;texto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.descricao;texto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.id;número;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.nome;texto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.nuanoultimacarga;texto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.numesultimacarga;texto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-processo-carga;status.DESPESA.status;texto;1;1;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;arquivo1;texto;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;arquivo2;;192;0;0;0;192;0;0,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;arquivo3;;192;0;0;0;192;0;0,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;arquivo4;;192;0;0;0;192;0;0,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;caminho;texto;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;descricao;;192;0;0;0;192;0;0,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;grupolink_id;texto;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;id;número;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;ordem;texto;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;texto;texto;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;tipoarquivo1;texto;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;tipoarquivo2;;192;0;0;0;192;0;0,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;tipoarquivo3;;192;0;0;0;192;0;0,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;tipoarquivo4;;192;0;0;0;192;0;0,0;;;
+transparencia-sc;20261123-215022;1;api-subareainteresse;tipocaminho;texto;192;192;0;0;0;0;100,0;;;
+transparencia-sc;20261123-215022;1;despesa-mensal;Ano;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Ação;texto (CSV);205284;205281;3;0;0;0;100,0;205284;205281;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Bimestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Categoria Econômica;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Credor;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Ação;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Categoria Econômica;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Credor;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Elemento;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Especificação Fonte;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Fonte Recurso;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Função;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Gestão;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Grupo Fonte Recurso;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Grupo Natureza Despesa;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Identificador Uso;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Modalidade Aplicação;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Poder;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Programa;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Subação;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Subelemento;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Subfunção;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Tipo Entidade;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Tipo Fonte;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Unidade Gestora;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Código Órgão;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Descrição Indicador Despesa Emergencial;texto (CSV);205284;186812;0;0;0;18472;91,0;205284;186812;91,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Elemento;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Especificação Fonte;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Fonte Recurso;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Função;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Gestão;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Grupo Fonte Recurso;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Grupo Natureza Despesa;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Identificador Uso;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Indicador Despesa Emergencial;texto (CSV);205284;186812;0;0;0;18472;91,0;205284;186812;91,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Modalidade Aplicação;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Mês;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Nro Bimestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Nro Mês;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Nro Quadrimestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Nro Semestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Nro Trimestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Poder;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Programa;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Quadrimestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Semestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Subação;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Subelemento;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Subfunção;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Tipo Entidade;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Tipo Fonte;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Trimestre;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Unidade Gestora;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Vl Dotação Atualizada;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Vl Dotação Inicial;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Vl Empenhado;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Vl Liquidado;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Vl Pago Orçamentário;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0
+transparencia-sc;20261123-215022;1;despesa-mensal;Órgão;texto (CSV);205284;205284;0;0;0;0;100,0;205284;205284;100,0

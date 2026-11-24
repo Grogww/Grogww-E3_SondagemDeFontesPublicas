@@ -22,10 +22,15 @@
   ],
   // Papel de cada execução ("fonte/id"). Sem entrada: principal, entra nos números da rodada.
   // evidencia-429: aparece só na tabela de 429, fora dos números consolidados.
+  // evidencia: guardada como evidência de um achado, fora dos números consolidados.
   "execucoes": {
     "pncp/20261122-222915": {
       "papel": "evidencia-429",
       "nota": "interrompida por 429 a ~36 req/min; substituída por 20261122-223518, com limite de 20/min"
+    },
+    "transparencia-sc/20261122-222340": {
+      "papel": "evidencia",
+      "nota": "páginas de consulta são rotas de SPA (404 acessadas direto) e despesa_2011_01.zip não existe (o nome é despesa_2011_1.zip); substituída por 20261123-215022, pela API interna"
     }
   },
   "fontes": {

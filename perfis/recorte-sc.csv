@@ -46,8 +46,10 @@ sicaf;20261122-222919;1;fornecedores-cnpj;campo;ufSigla;UF do fornecedor;30;0;0;
 sicaf;20261122-222919;1;fornecedores-filtro;campo;ufSigla;UF do fornecedor;14;0;0;0;0;7000;7000;0;0,0;330;4,7;6670;AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SE SP TO;0;
 sicaf;20261122-222919;1;resultados-fornecedor;campo;ufFornecedor;UF do fornecedor;4;16;0;0;0;12;0;12;100,0;0;;0;;0;
 sicaf;20261122-222919;1;uasg;campo;siglaUf;UF da UASG;2;0;0;0;0;779;779;0;0,0;779;100,0;0;;779;100,0
-transparencia-sc;20261122-222340;1;dados-abertos;nao-se-aplica;;;0;0;1;0;0;0;;;;;;;;0;
-transparencia-sc;20261122-222340;1;dados-abertos-despesa;nao-se-aplica;;;0;0;0;0;0;0;;;;;;;;0;
-transparencia-sc;20261122-222340;1;despesa-indicador;nao-se-aplica;;;0;0;0;0;0;0;;;;;;;;0;
-transparencia-sc;20261122-222340;1;despesa-mensal;fonte;;despesa do Executivo estadual de SC;0;0;0;4;0;186812;186812;;;186812;100,0;;;0;
-transparencia-sc;20261122-222340;1;pagina-inicial;nao-se-aplica;;;0;0;1;0;0;0;;;;;;;;0;
+transparencia-sc;20261123-215022;1;api-despesa;fonte;;despesa do Executivo estadual de SC, por grupo de natureza da despesa;5;0;0;0;0;21;21;;;21;100,0;;;0;
+transparencia-sc;20261123-215022;1;api-despesa-macrocontexto;nao-se-aplica;;agregados da área (série anual e mensal), não registros;5;0;0;0;0;5;;;;;;;;0;
+transparencia-sc;20261123-215022;1;api-processo-carga;nao-se-aplica;;data e situação da última carga da despesa;1;0;0;0;0;1;;;;;;;;0;
+transparencia-sc;20261123-215022;1;api-subareainteresse;nao-se-aplica;;lista dos arquivos de dados abertos (um registro por link);1;0;0;0;0;192;;;;;;;;0;
+transparencia-sc;20261123-215022;1;dados-abertos;nao-se-aplica;;;0;0;2;0;0;0;;;;;;;;0;
+transparencia-sc;20261123-215022;1;despesa-mensal;fonte;;despesa do Executivo estadual de SC;0;0;0;5;0;205284;205284;;;205284;100,0;;;0;
+transparencia-sc;20261123-215022;1;pagina-inicial;nao-se-aplica;;;0;0;1;0;0;0;;;;;;;;0;
