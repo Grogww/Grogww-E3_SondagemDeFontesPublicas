@@ -197,7 +197,8 @@
       // Download em lote, sem API (ficha 6, Modalidade de acesso). Repositório de arquivos da
       // Receita Federal: endereço tirado dos links das listagens salvas (repositorioDeArquivos.pdf).
       "baseUrl": "https://arquivos.receitafederal.gov.br",
-      // Arquivos de até centenas de MB por requisição.
+      // Arquivos de até centenas de MB (Estabelecimentos1 342 MB, Empresas1 78 MB). Em BaixarAsync o
+      // timeout vale só até a chegada dos cabeçalhos; a transferência do corpo não tem prazo.
       "timeoutSegundos": 900,
       "maxTentativas": 3,
       "limitePorMinuto": null,
@@ -212,8 +213,12 @@
           { "endpoint": "listagem-ecf", "chave": "raiz", "url": "index.php/s/MPPfFit7g7zdA8C" }
         ],
         // Endereço de download de arquivo: não consta dos documentos salvos (ficha 6, Observações).
-        // Vazio = a amostra abaixo não é baixada. Marcadores: {compartilhamento}, {dir}, {nome}.
-        "modeloDownload": "",
+        // Vazio = a amostra abaixo não é baixada. Marcadores: {token}, {compartilhamento}, {dir}, {nome};
+        // {token} é o final de "compartilhamento" (index.php/s/<token>); cada trecho de {dir} é escapado à parte.
+        "modeloDownload": "public.php/dav/files/{token}/{dir}/{nome}",
+        "origemModeloDownload": "Verificado no servidor; não consta da documentação. WebDAV público do Nextcloud, conferido em 2026-11-24 só pelos cabeçalhos, sem baixar: public.php/dav/files/YggdBLfdninEJX9/2026-10/Cnaes.zip -> 200 application/zip. O padrão index.php/s/<token>/download?path=<dir>&files=<nome> redireciona, perde a pasta e devolve HTML.",
+        // Data de referência do dump amostrado (pasta mensal da listagem).
+        "dataReferencia": "2026-10",
         // Amostra fixa: só arquivos que aparecem nas listagens salvas (DicionarioCNPJ2026-10.pdf,
         // regimestributarios.pdf). Simples, Sócios e demais domínios não aparecem nelas.
         "arquivos": [

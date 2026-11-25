@@ -52,15 +52,18 @@ public sealed class PerfilEndpointCampos
     public Dictionary<string, EstatCampo> Campos { get; } = new(StringComparer.Ordinal);
 
     /// <summary>Há como contar SC neste endpoint?</summary>
-    public bool ContaSc => Recorte.Recorte is "campo" or "fonte" or "herdado";
+    public bool ContaSc => Recorte.Recorte is "campo" or "juncao" or "fonte" or "herdado";
 
-    /// <summary>Registros em que a UF pôde ser lida (no recorte por campo, exclui os sem UF).</summary>
-    public long RegistrosComUf => Recorte.Recorte == "campo" ? Registros - RegistrosSemUf : Registros;
+    /// <summary>A UF é lida registro a registro (campo ou junção), com sem UF e outra UF.</summary>
+    public bool PorRegistro => Recorte.Recorte is "campo" or "juncao";
+
+    /// <summary>Registros em que a UF pôde ser lida (no recorte por campo ou junção, exclui os sem UF).</summary>
+    public long RegistrosComUf => PorRegistro ? Registros - RegistrosSemUf : Registros;
 
     /// <summary>% de SC sobre os registros com UF; nulo quando não há como saber (todos sem UF).</summary>
     public double? FracaoSc => ContaSc && RegistrosComUf > 0 ? (double)RegistrosSc / RegistrosComUf : null;
 
-    public double? FracaoSemUf => Recorte.Recorte == "campo" && Registros > 0 ? (double)RegistrosSemUf / Registros : null;
+    public double? FracaoSemUf => PorRegistro && Registros > 0 ? (double)RegistrosSemUf / Registros : null;
 }
 
 public sealed class PerfilCampos
@@ -261,47 +264,88 @@ public sealed class PerfilCampos
 
     // ---------- arquivos baixados (CSV, solto ou em ZIP) ----------
 
+    /// <summary>Chaves vistas num endpoint referenciado por uma junção: todas e as de registros de SC.</summary>
+    private sealed class Chaves(string campo)
+    {
+        public string Campo { get; } = campo;
+        public HashSet<long> Todas { get; } = new();
+        public HashSet<long> Sc { get; } = new();
+    }
+
+    // Leitura em fluxo (regra R3): os arquivos nunca são carregados inteiros; das junções só ficam
+    // as chaves numéricas (ex.: CNPJ básico) em memória.
     public void LerArquivos(string pastaExecucao)
     {
-        foreach (var regra in _fonte.Arquivos)
+        var chaves = new Dictionary<string, Chaves>(StringComparer.Ordinal);
+        foreach (var r in _fonte.Endpoints.Values.Append(_fonte.Padrao))
+            if (r is { Recorte: "juncao", Juncao: { } j }) chaves.TryAdd(j.Endpoint, new Chaves(j.Campo));
+
+        // Endpoints com junção por último: dependem das chaves dos outros.
+        foreach (var regra in _fonte.Arquivos.OrderBy(r => _fonte.Recorte(r.Endpoint).Recorte == "juncao"))
         {
             var pasta = Path.Combine(pastaExecucao, regra.Pasta);
             if (!Directory.Exists(pasta)) continue;
             var p = Endpoint(regra.Endpoint);
             var codificacao = regra.Codificacao.Equals("latin1", StringComparison.OrdinalIgnoreCase)
                 ? Encoding.Latin1 : Encoding.GetEncoding(regra.Codificacao);
+            var filtro = regra.Arquivo is null ? null
+                : new System.Text.RegularExpressions.Regex(regra.Arquivo, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            var coleta = chaves.GetValueOrDefault(regra.Endpoint);
+            var juncao = p.Recorte is { Recorte: "juncao", Juncao: { } jj } ? chaves[jj.Endpoint] : null;
             foreach (var arquivo in Directory.EnumerateFiles(pasta, "*", SearchOption.AllDirectories).Order())
             {
+                if (filtro is not null && !filtro.IsMatch(Path.GetFileName(arquivo))) continue;
                 if (arquivo.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
                 {
                     using var zip = ZipFile.OpenRead(arquivo);
-                    foreach (var entrada in zip.Entries.Where(x => x.Name.EndsWith(".csv", StringComparison.OrdinalIgnoreCase)))
+                    var entradas = zip.Entries.Where(x => x.Name.Length > 0
+                        && (regra.Colunas is not null || x.Name.EndsWith(".csv", StringComparison.OrdinalIgnoreCase)));
+                    foreach (var entrada in entradas)
                     {
                         using var leitor = new StreamReader(entrada.Open(), codificacao);
-                        LerCsv(p, leitor, regra.Separador[0]);
+                        LerCsv(p, leitor, regra, coleta, juncao);
                     }
                 }
                 else if (arquivo.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
                 {
                     using var leitor = new StreamReader(arquivo, codificacao);
-                    LerCsv(p, leitor, regra.Separador[0]);
+                    LerCsv(p, leitor, regra, coleta, juncao);
                 }
             }
         }
     }
 
-    private void LerCsv(PerfilEndpointCampos p, TextReader leitor, char separador)
+    private void LerCsv(PerfilEndpointCampos p, TextReader leitor, RegraArquivo regra, Chaves? coleta, Chaves? juncao)
     {
         p.ArquivosLidos++;
-        string[]? cabecalho = null;
+        var cabecalho = regra.Colunas?.ToArray();
         var estados = new Dictionary<string, Estado>(StringComparer.Ordinal);
-        foreach (var linha in LinhasCsv(leitor, separador))
+        int iUf = -1, iChave = -1, iColeta = -1;
+        void Indices()
         {
-            if (cabecalho is null) { cabecalho = linha.Select(c => c.Trim()).ToArray(); continue; }
+            iUf = p.Recorte.CampoUf is { } u ? Array.IndexOf(cabecalho!, u) : -1;
+            iChave = p.Recorte.CampoChave is { } k ? Array.IndexOf(cabecalho!, k) : -1;
+            iColeta = coleta is not null ? Array.IndexOf(cabecalho!, coleta.Campo) : -1;
+            if (p.Recorte.Recorte == "campo" && iUf < 0)
+                throw new InvalidOperationException($"{p.Endpoint}: coluna de UF '{p.Recorte.CampoUf}' não encontrada");
+            if (p.Recorte.Recorte == "juncao" && iChave < 0)
+                throw new InvalidOperationException($"{p.Endpoint}: coluna de chave '{p.Recorte.CampoChave}' não encontrada");
+            if (coleta is not null && iColeta < 0)
+                throw new InvalidOperationException($"{p.Endpoint}: coluna de chave '{coleta.Campo}' não encontrada");
+        }
+        if (cabecalho is not null) Indices();
+        foreach (var linha in LinhasCsv(leitor, regra.Separador[0]))
+        {
+            if (cabecalho is null) { cabecalho = linha.Select(c => c.Trim()).ToArray(); Indices(); continue; }
             if (linha.Count == 1 && linha[0].Length == 0) continue; // linha em branco
             if (linha.Count != cabecalho.Length) p.LinhasMalformadas++;
             p.Registros++;
-            var deSc = ClassificarLinha(p);
+            var deSc = ClassificarLinha(p, linha, iUf, iChave, juncao);
+            if (coleta is not null && iColeta < linha.Count && long.TryParse(linha[iColeta].Trim(), out var ch))
+            {
+                coleta.Todas.Add(ch);
+                if (deSc) coleta.Sc.Add(ch);
+            }
             estados.Clear();
             for (var i = 0; i < cabecalho.Length; i++)
             {
@@ -316,11 +360,29 @@ public sealed class PerfilCampos
             foreach (var c in cabecalho) if (p.Campos.TryGetValue(c, out var e)) e.Tipos.Add("texto (CSV)");
     }
 
-    private static bool ClassificarLinha(PerfilEndpointCampos p)
+    private bool ClassificarLinha(PerfilEndpointCampos p, List<string> linha, int iUf, int iChave, Chaves? juncao)
     {
-        if (p.Recorte.Recorte is not ("fonte" or "herdado")) return false;
-        p.RegistrosSc++;
-        return true;
+        switch (p.Recorte.Recorte)
+        {
+            case "fonte" or "herdado":
+                p.RegistrosSc++;
+                return true;
+            case "campo":
+                var uf = iUf < linha.Count ? linha[iUf].Trim() : "";
+                if (uf.Length == 0) { p.RegistrosSemUf++; return false; }
+                if (uf.Equals(_regras.Uf, StringComparison.OrdinalIgnoreCase)) { p.RegistrosSc++; return true; }
+                p.RegistrosOutraUf++;
+                p.OutrasUfs.Add(uf);
+                return false;
+            case "juncao" when juncao is not null:
+                if (iChave >= linha.Count || !long.TryParse(linha[iChave].Trim(), out var ch) || !juncao.Todas.Contains(ch))
+                { p.RegistrosSemUf++; return false; }
+                if (juncao.Sc.Contains(ch)) { p.RegistrosSc++; return true; }
+                p.RegistrosOutraUf++;
+                return false;
+            default:
+                return false;
+        }
     }
 
     /// <summary>Leitor de CSV em fluxo, com aspas (campos com separador ou quebra de linha) e "" como aspa literal.</summary>

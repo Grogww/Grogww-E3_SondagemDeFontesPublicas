@@ -5,6 +5,8 @@
   //   vazio, não como erro. O 204 é sempre vazio, sem precisar de regra.
   // recorte (por endpoint, ou "padrao" para a fonte):
   //   "campo"         -> registro é de SC quando o atributo "campoUf" vale "uf";
+  //   "juncao"        -> registro é de SC quando o valor de "campoChave" aparece em algum registro de SC
+  //                      de "juncao.endpoint" (coluna "juncao.campo"); ausente de lá = sem UF;
   //   "fonte"         -> a fonte inteira é de SC (ex.: Executivo estadual);
   //   "herdado"       -> a requisição parte de um registro de SC (detalhe por chave) e o retorno não traz UF;
   //   "sem-uf"        -> não há como identificar SC;
@@ -94,6 +96,50 @@
     },
     "cnpj": {
       "padrao": { "recorte": "nao-se-aplica" },
+      "endpoints": {
+        "estabelecimentos": { "recorte": "campo", "campoUf": "uf", "nota": "UF do estabelecimento (cnpj-metadados.pdf, p. 2); amostra Estabelecimentos1, ~1/10 da base do dump 2026-10" },
+        // Empresas não têm UF: SC pela junção do CNPJ básico com os estabelecimentos baixados.
+        "empresas": {
+          "recorte": "juncao", "campoChave": "cnpj_basico",
+          "juncao": { "endpoint": "estabelecimentos", "campo": "cnpj_basico" },
+          "nota": "SC = ao menos um estabelecimento de SC em Estabelecimentos1; sem UF = CNPJ básico ausente de Estabelecimentos1 (a divisão em partes não garante que Empresas1 e Estabelecimentos1 tragam as mesmas empresas)"
+        },
+        "dominio-cnaes": { "recorte": "nao-se-aplica" },
+        "ecf-lucro-arbitrado": { "recorte": "sem-uf", "nota": "o arquivo não traz UF; cnpj tem 14 dígitos, sem junção configurada" }
+      },
+      // ZIP da Receita: entradas sem extensão .csv, sem cabeçalho, ";" e campos entre aspas
+      // (cnpj-metadados.pdf, p. 5, item 1). Codificação não informada na documentação; conferida nos
+      // bytes da execução 20261124-210846: UTF-8 inválido e nenhum byte 0x80-0x9F, compatível com latin1
+      // (ISO-8859-1); Cnaes lido em latin1 sai com acentos corretos. Fim de linha LF.
+      // Colunas na ordem do layout (cnpj-metadados.pdf, p. 1-2 e 4-5).
+      "arquivos": [
+        {
+          "endpoint": "estabelecimentos", "pasta": "arquivos/2026-10", "arquivo": "^Estabelecimentos[0-9]*[.]zip$",
+          "codificacao": "latin1", "separador": ";",
+          "colunas": ["cnpj_basico", "cnpj_ordem", "cnpj_dv", "identificador_matriz_filial", "nome_fantasia",
+            "situacao_cadastral", "data_situacao_cadastral", "motivo_situacao_cadastral", "nome_cidade_exterior", "pais",
+            "data_inicio_atividade", "cnae_fiscal_principal", "cnae_fiscal_secundaria", "tipo_logradouro", "logradouro",
+            "numero", "complemento", "bairro", "cep", "uf", "municipio", "ddd_1", "telefone_1", "ddd_2", "telefone_2",
+            "ddd_fax", "fax", "correio_eletronico", "situacao_especial", "data_situacao_especial"]
+        },
+        {
+          "endpoint": "empresas", "pasta": "arquivos/2026-10", "arquivo": "^Empresas[0-9]*[.]zip$",
+          "codificacao": "latin1", "separador": ";",
+          "colunas": ["cnpj_basico", "razao_social", "natureza_juridica", "qualificacao_responsavel", "capital_social",
+            "porte_empresa", "ente_federativo_responsavel"]
+        },
+        {
+          "endpoint": "dominio-cnaes", "pasta": "arquivos/2026-10", "arquivo": "^Cnaes[.]zip$",
+          "codificacao": "latin1", "separador": ";",
+          "colunas": ["codigo", "descricao"]
+        },
+        // ECF (compartilhamento à parte): CSV com cabeçalho, separador "," e só ASCII, ao contrário dos
+        // arquivos do CNPJ (conferido na execução 20261124-210846).
+        {
+          "endpoint": "ecf-lucro-arbitrado", "pasta": "arquivos", "arquivo": "^entidades-lucro-arbitrado[.]zip$",
+          "codificacao": "utf-8", "separador": ","
+        }
+      ],
       // sem-conteudo: 2xx cujo corpo não tem o que se esperava (nem OK, nem erro).
       "semConteudo": [
         {

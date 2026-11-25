@@ -84,9 +84,17 @@ public sealed class RegraSemConteudo
 
 public sealed class RegraRecorte
 {
-    /// <summary>campo · fonte · herdado · sem-uf · nao-se-aplica</summary>
+    /// <summary>campo · juncao · fonte · herdado · sem-uf · nao-se-aplica</summary>
     public string Recorte { get; set; } = "sem-uf";
     public string? CampoUf { get; set; }
+    /// <summary>Recorte "juncao": coluna deste endpoint cujo valor é procurado em <see cref="Juncao"/>.</summary>
+    public string? CampoChave { get; set; }
+    /// <summary>
+    /// Recorte "juncao": endpoint com recorte "campo" e coluna de chave. O registro é de SC quando a
+    /// chave aparece em algum registro de SC desse endpoint, de outra UF quando só aparece fora de SC,
+    /// e sem UF quando não aparece nele (não há como saber).
+    /// </summary>
+    public RegraJuncao? Juncao { get; set; }
     public string? Nota { get; set; }
     /// <summary>
     /// Onde estão os registros no corpo, quando não é a raiz nem data/resultado/...
@@ -95,12 +103,25 @@ public sealed class RegraRecorte
     public string? Registros { get; set; }
 }
 
+public sealed class RegraJuncao
+{
+    public string Endpoint { get; set; } = "";
+    public string Campo { get; set; } = "";
+}
+
 /// <summary>Arquivos baixados com conteúdo tabular (ZIP com CSV, ou CSV).</summary>
 public sealed class RegraArquivo
 {
     public string Endpoint { get; set; } = "";
     /// <summary>Pasta relativa à pasta da execução.</summary>
     public string Pasta { get; set; } = "";
+    /// <summary>Expressão regular sobre o nome do arquivo baixado. Nulo: todos os da pasta.</summary>
+    public string? Arquivo { get; set; }
     public string Codificacao { get; set; } = "utf-8";
     public string Separador { get; set; } = ";";
+    /// <summary>
+    /// Nomes das colunas, para CSV sem cabeçalho (a primeira linha já é registro). Nulo: a primeira
+    /// linha é o cabeçalho. Com colunas, todas as entradas do ZIP são lidas (não só as ".csv").
+    /// </summary>
+    public List<string>? Colunas { get; set; }
 }

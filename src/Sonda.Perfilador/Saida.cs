@@ -86,8 +86,8 @@ public static class Saida
         foreach (var e in execucoes)
         foreach (var p in e.Campos.PorEndpoint.Values.OrderBy(x => x.Endpoint))
         {
-            var porCampo = p.Recorte.Recorte == "campo";
-            var conferivel = porCampo && p.RegistrosFiltroOrigem > 0;
+            var porCampo = p.PorRegistro;
+            var conferivel = p.Recorte.Recorte == "campo" && p.RegistrosFiltroOrigem > 0;
             csv.Linha(e.Fonte, e.Id, e.Rodada, p.Endpoint, p.Recorte.Recorte, p.Recorte.CampoUf, p.Recorte.Nota,
                 p.RespostasComRegistros, p.RespostasSemRegistros, p.RespostasNaoJson, p.ArquivosLidos, p.LinhasMalformadas,
                 p.Registros, p.ContaSc ? p.RegistrosComUf : null, porCampo ? p.RegistrosSemUf : null, Pct(p.FracaoSemUf),
@@ -135,6 +135,7 @@ public static class Saida
         md.AppendLine("- **p50/p95** da latência total (até o fim do corpo) de todas as tentativas com resposta HTTP, por interpolação linear (igual ao PERCENTIL.INC). Em downloads, a latência inclui a transferência do arquivo.");
         md.AppendLine($"- **Preenchido** = valor não nulo, não vazio e diferente dos marcadores ({string.Join(", ", regras.Marcadores.Select(x => $"\"{x}\""))}). Em listas, o registro conta como preenchido se algum elemento tiver valor.");
         md.AppendLine($"- **% {uf}** é calculado sobre os registros **com UF**. *Sem UF* são registros em que o campo de UF veio nulo ou vazio, o que também é um achado de completude. Quando todos vêm sem UF, o % fica \"—\". A *nota* de cada endpoint diz a que UF o campo se refere.");
+        md.AppendLine("- No recorte por **junção** (ex.: Empresas do CNPJ, sem UF própria), o registro é de SC quando a chave aparece em algum registro de SC do endpoint ligado; *sem UF* são as chaves que não aparecem nele.");
         md.AppendLine("- Execuções marcadas como **evidência de 429** em `config/perfil.json` aparecem só na seção de limite de acessos, e as marcadas como **evidência** só na lista de evidências; ambas ficam fora dos números das rodadas.");
         md.AppendLine();
 
@@ -152,7 +153,7 @@ public static class Saida
                 var lat = ms.SelectMany(m => m.Latencias).ToList();
                 var ps = e.Campos.PorEndpoint.Values;
                 var falhas = ms.Sum(m => m.Falhas);
-                md.AppendLine($"| {e.Fonte} | {e.Id} | {e.Segmentos[^1].Situacao} | {req} | {Soma(ms, Desfecho.Ok)} | {Soma(ms, Desfecho.Vazio)} | {Soma(ms, Desfecho.SemConteudo)} | {falhas} | {Pct(Razao(falhas, req))}% | {Num(PerfilRequisicoes.Percentil(lat, 0.5))} | {Num(PerfilRequisicoes.Percentil(lat, 0.95))} | {ps.Sum(p => p.Registros)} | {ps.Where(p => p.ContaSc).Sum(p => p.RegistrosSc)} | {ps.Where(p => p.Recorte.Recorte == "campo").Sum(p => p.RegistrosSemUf)} |");
+                md.AppendLine($"| {e.Fonte} | {e.Id} | {e.Segmentos[^1].Situacao} | {req} | {Soma(ms, Desfecho.Ok)} | {Soma(ms, Desfecho.Vazio)} | {Soma(ms, Desfecho.SemConteudo)} | {falhas} | {Pct(Razao(falhas, req))}% | {Num(PerfilRequisicoes.Percentil(lat, 0.5))} | {Num(PerfilRequisicoes.Percentil(lat, 0.95))} | {ps.Sum(p => p.Registros)} | {ps.Where(p => p.ContaSc).Sum(p => p.RegistrosSc)} | {ps.Where(p => p.PorRegistro).Sum(p => p.RegistrosSemUf)} |");
             }
             md.AppendLine();
             md.AppendLine($"*Registros*, *{uf}* e *Sem UF* somam todos os endpoints, inclusive detalhes que repetem registros das listas; por endpoint, veja as seções de cada fonte.");
@@ -232,10 +233,11 @@ public static class Saida
                     var cheios = p.Campos.Count(c => c.Value.Total[(int)Estado.Preenchido] == p.Registros);
                     var nunca = p.Campos.Where(c => c.Value.Total[(int)Estado.Preenchido] == 0).Select(c => c.Key).OrderBy(x => x, StringComparer.Ordinal).ToList();
                     var nuncaTxt = nunca.Count == 0 ? "—" : string.Join(", ", nunca.Take(8).Select(x => $"`{x}`")) + (nunca.Count > 8 ? $" (+{nunca.Count - 8})" : "");
-                    var recorte = p.Recorte.Recorte + (p.Recorte.CampoUf is null ? "" : $" (`{p.Recorte.CampoUf}`)");
+                    var recorte = p.Recorte.Recorte + (p.Recorte.CampoUf is null ? "" : $" (`{p.Recorte.CampoUf}`)")
+                        + (p.Recorte.Juncao is { } j ? $" (`{p.Recorte.CampoChave}` em `{j.Endpoint}.{j.Campo}`)" : "");
                     if (p.Recorte.Recorte == "campo" && p.RegistrosFiltroOrigem > 0)
                         recorte += $"; filtro na origem: {Pct(Razao(p.ScFiltroOrigem, p.RegistrosFiltroOrigem))}% de {uf}";
-                    var semUf = p.Recorte.Recorte == "campo" ? $"{p.RegistrosSemUf} ({Pct(p.FracaoSemUf)}%)" : "—";
+                    var semUf = p.PorRegistro ? $"{p.RegistrosSemUf} ({Pct(p.FracaoSemUf)}%)" : "—";
                     var pctSc = p.FracaoSc is { } f ? Pct(f) + "%" : "—";
                     md.AppendLine($"| {p.Endpoint} | {p.Registros} | {(p.ContaSc ? p.RegistrosSc : "—")} | {semUf} | {pctSc} | {recorte} | {p.Campos.Count} | {cheios} | {nuncaTxt} |");
                 }

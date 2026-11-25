@@ -8,8 +8,9 @@ namespace Sonda.Fontes.Cnpj;
 /// Etapas: (1) páginas de listagem citadas na documentação, guardadas em HTML bruto;
 /// (2) amostra fixa de arquivos, definida na configuração.
 /// O endereço de download de cada arquivo não consta dos documentos salvos (ficha 6,
-/// Observações); só as páginas de listagem estão documentadas. Por isso a etapa 2 depende
-/// de "modeloDownload" na configuração e é pulada enquanto ele estiver vazio.
+/// Observações); só as páginas de listagem estão documentadas. A etapa 2 usa "modeloDownload"
+/// da configuração (WebDAV público do Nextcloud, verificado no servidor em 2026-11-24) e é
+/// pulada enquanto ele estiver vazio.
 /// Recorte SC: sem filtro na origem (arquivos nacionais, divididos por numeração e não por UF).
 /// SC é identificada no retorno pelo campo UF de Estabelecimentos (cnpj-metadados.pdf, p. 2);
 /// Empresas, Simples e Sócios não têm UF e dependem da junção pelo CNPJ básico.
@@ -40,10 +41,7 @@ public sealed class SondaCnpj : ISonda
 
         foreach (var a in arquivos)
         {
-            var url = modelo
-                .Replace("{compartilhamento}", a.Compartilhamento)
-                .Replace("{dir}", Uri.EscapeDataString(a.Dir))
-                .Replace("{nome}", Uri.EscapeDataString(a.Nome));
+            var url = MontarUrl(modelo, a);
             var pasta = a.Dir.Trim('/');
             var chave = $"dir={(pasta.Length == 0 ? "/" : pasta)};arquivo={a.Nome}";
             var destino = pasta.Length == 0 ? $"arquivos/{a.Nome}" : $"arquivos/{pasta}/{a.Nome}";
@@ -55,6 +53,27 @@ public sealed class SondaCnpj : ISonda
         }
     }
 
+    /// <summary>
+    /// Marcadores: {token} (último trecho de "compartilhamento", ex.: index.php/s/&lt;token&gt;),
+    /// {compartilhamento}, {dir} e {nome}. Cada trecho da pasta é escapado à parte, para a "/"
+    /// continuar separando as pastas (escapar a pasta inteira dá %2F e o endereço quebra).
+    /// Com a pasta na raiz, a barra que sobra é retirada.
+    /// </summary>
+    internal static string MontarUrl(string modelo, ConfigArquivo a)
+    {
+        var token = a.Compartilhamento.TrimEnd('/').Split('/')[^1];
+        var dir = string.Join("/", a.Dir.Split('/', StringSplitOptions.RemoveEmptyEntries).Select(Uri.EscapeDataString));
+        var url = modelo
+            .Replace("{token}", Uri.EscapeDataString(token))
+            .Replace("{compartilhamento}", a.Compartilhamento.Trim('/'))
+            .Replace("{dir}", dir)
+            .Replace("{nome}", Uri.EscapeDataString(a.Nome));
+        // Barras repetidas (pasta vazia), sem tocar no "://" de um modelo absoluto.
+        var inicio = url.IndexOf("://", StringComparison.Ordinal);
+        inicio = inicio < 0 ? 0 : inicio + 3;
+        return url[..inicio] + System.Text.RegularExpressions.Regex.Replace(url[inicio..], "/{2,}", "/");
+    }
+
     private sealed class ConfigListagem
     {
         public string Endpoint { get; set; } = "";
@@ -63,7 +82,7 @@ public sealed class SondaCnpj : ISonda
         public string Url { get; set; } = "";
     }
 
-    private sealed class ConfigArquivo
+    internal sealed class ConfigArquivo
     {
         public string Endpoint { get; set; } = "";
         /// <summary>Caminho do compartilhamento público, relativo a baseUrl.</summary>
