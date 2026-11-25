@@ -50,6 +50,7 @@ if (execucoes.Count == 0) { Console.Error.WriteLine("Nenhuma execução encontra
 
 Directory.CreateDirectory(saida);
 Saida.Gravar(saida, execucoes, regras);
+Qualidade.Gravar(Path.Combine(saida, "qualidade.csv"), pastaDados, execucoes);
 Console.WriteLine($"{execucoes.Count} execuções perfiladas. Saída: {saida}");
 return 0;
 

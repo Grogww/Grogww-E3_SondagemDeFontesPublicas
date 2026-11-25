@@ -324,7 +324,7 @@ public sealed class PerfilCampos
     }
 
     /// <summary>Leitor de CSV em fluxo, com aspas (campos com separador ou quebra de linha) e "" como aspa literal.</summary>
-    private static IEnumerable<List<string>> LinhasCsv(TextReader r, char sep)
+    internal static IEnumerable<List<string>> LinhasCsv(TextReader r, char sep)
     {
         var campos = new List<string>();
         var atual = new StringBuilder();

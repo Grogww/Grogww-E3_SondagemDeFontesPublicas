@@ -1,0 +1,32 @@
+﻿fonte;execucao;endpoint;regra;base;avaliados;violacoes;violacoes_pct
+cnpj;20261124-210846;estabelecimentos;situacao_cadastral em {01, 02, 03, 04, 08};cnpj-metadados.pdf;4753435;0;0,0
+pncp;20261122-223518;contratacoes-publicacao;modalidadeId entre 1 e 13;Manual API Consultas §5.2;2273;0;0,0
+pncp;20261122-223518;contratacoes-proposta;modalidadeId entre 1 e 13;Manual API Consultas §5.2;250;0;0,0
+pncp;20261122-223518;contratacoes-atualizacao;modalidadeId entre 1 e 13;Manual API Consultas §5.2;300;0;0,0
+pncp;20261122-223518;contratacao-chave;modalidadeId entre 1 e 13;Manual API Consultas §5.2;85;0;0,0
+pncp;20261122-223518;contratos;dataVigenciaFim >= dataVigenciaInicio;lógica;2500;0;0,0
+pncp;20261122-223518;contratos-atualizacao;dataVigenciaFim >= dataVigenciaInicio;lógica;999;0;0,0
+pncp;20261122-223518;contrato-chave;dataVigenciaFim >= dataVigenciaInicio;lógica;20;0;0,0
+pncp;20261122-223518;compra-contratos;dataVigenciaFim >= dataVigenciaInicio;lógica;24;0;0,0
+pncp;20261122-223518;compra-itens;situacaoCompraItem = 2 (Homologado) <-> temResultado = true;Manual API Consultas §5.6;898;0;0,0
+portal-transparencia;20261122-222619;ceis;"dataFimSancao >= dataInicioSancao (""Sem informação"" não conta)";lógica;318;0;0,0
+portal-transparencia;20261122-222619;ceis;"Pessoa Física -> CPF (11 dígitos); demais tipos -> CNPJ (14) em sancionado.codigoFormatado";dicionário de dados;341;0;0,0
+portal-transparencia;20261122-222619;ceis-id;"dataFimSancao >= dataInicioSancao (""Sem informação"" não conta)";lógica;10;0;0,0
+portal-transparencia;20261122-222619;ceis-id;"Pessoa Física -> CPF (11 dígitos); demais tipos -> CNPJ (14) em sancionado.codigoFormatado";dicionário de dados;10;0;0,0
+portal-transparencia;20261122-222619;ceis-cnpj;"dataFimSancao >= dataInicioSancao (""Sem informação"" não conta)";lógica;26;0;0,0
+portal-transparencia;20261122-222619;ceis-cnpj;"Pessoa Física -> CPF (11 dígitos); demais tipos -> CNPJ (14) em sancionado.codigoFormatado";dicionário de dados;26;0;0,0
+portal-transparencia;20261122-222619;cnep;"dataFimSancao >= dataInicioSancao (""Sem informação"" não conta)";lógica;20;0;0,0
+portal-transparencia;20261122-222619;cnep;"Pessoa Física -> CPF (11 dígitos); demais tipos -> CNPJ (14) em sancionado.codigoFormatado";dicionário de dados;297;0;0,0
+portal-transparencia;20261122-222619;cnep-id;"dataFimSancao >= dataInicioSancao (""Sem informação"" não conta)";lógica;2;0;0,0
+portal-transparencia;20261122-222619;cnep-id;"Pessoa Física -> CPF (11 dígitos); demais tipos -> CNPJ (14) em sancionado.codigoFormatado";dicionário de dados;10;0;0,0
+portal-transparencia;20261122-222619;cnep-cnpj;"dataFimSancao >= dataInicioSancao (""Sem informação"" não conta)";lógica;3;0;0,0
+portal-transparencia;20261122-222619;cnep-cnpj;"Pessoa Física -> CPF (11 dígitos); demais tipos -> CNPJ (14) em sancionado.codigoFormatado";dicionário de dados;14;0;0,0
+sicaf;20261122-222919;contratos;dataVigenciaFinal >= dataVigenciaInicial;lógica;58;0;0,0
+sicaf;20261122-222919;contratos;contratoExcluido = true <-> dataHoraExclusao preenchida;lógica;58;0;0,0
+sicaf;20261122-222919;contratos-fim-vigencia;dataVigenciaFinal >= dataVigenciaInicial;lógica;89;0;0,0
+sicaf;20261122-222919;contratos-fim-vigencia;contratoExcluido = true <-> dataHoraExclusao preenchida;lógica;89;0;0,0
+sicaf;20261122-222919;contratos-fornecedor;dataVigenciaFinal >= dataVigenciaInicial;lógica;16;0;0,0
+sicaf;20261122-222919;contratos-fornecedor;contratoExcluido = true <-> dataHoraExclusao preenchida;lógica;16;0;0,0
+sicaf;20261122-222919;contratos-itens;dataVigenciaFinal >= dataVigenciaInicial;lógica;94;0;0,0
+sicaf;20261122-222919;contratos-itens;contratoExcluido = true <-> dataHoraExclusaoContrato preenchida;lógica;94;0;0,0
+transparencia-sc;20261123-215022;api-despesa;vlpago <= vlliquidado <= vlempenhado;Lei 4.320/64, arts. 58-65;21;0;0,0
